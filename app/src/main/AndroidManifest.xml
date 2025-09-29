@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.carshering">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="DriveNext"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Онбординг -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+
+        <!-- Логин -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Регистрация шаг 1 -->
+        <activity
+            android:name=".RegisterStep1Activity"
+            android:exported="false" />
+
+        <!-- Регистрация шаг 2 -->
+        <activity
+            android:name=".RegisterStep2Activity"
+            android:exported="false" />
+
+        <!-- Регистрация шаг 3 -->
+        <activity
+            android:name=".RegisterStep3Activity"
+            android:exported="false" />
+
+        <!-- Регистрация завершена -->
+        <activity
+            android:name=".RegisterSuccessActivity"
+            android:exported="false" />
+
+    </application>
+</manifest>

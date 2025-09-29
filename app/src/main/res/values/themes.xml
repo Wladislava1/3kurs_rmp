@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.Carshering" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item> <!-- optional -->
+    </style>
+</resources>

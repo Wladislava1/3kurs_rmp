@@ -1,0 +1,127 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- Заголовок -->
+        <TextView
+            android:text="Войдите в аккаунт"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/purple"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Пожалуйста, введите свои данные"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Email -->
+        <TextView
+            android:text="Электронная почта"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:textColor="#404040"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etLoginEmail"
+            android:hint="Введите электронную почту"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Password -->
+        <TextView
+            android:text="Пароль"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etLoginPassword"
+            android:hint="Введите пароль"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Забыли пароль -->
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:text="Забыли пароль?"
+            android:textColor="@color/purple"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"/>
+
+        <!-- Кнопка Войти -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:text="Войти"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat_regular" />
+
+        <!-- Войти через Google -->
+        <Button
+            android:id="@+id/btnGoogleLogin"
+            android:text="Войти через Google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:textColor="@android:color/black"
+            android:drawableLeft="@drawable/ic_google"
+            android:paddingStart="90dp"
+            android:paddingEnd="90dp"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="64dp"
+            android:fontFamily="@font/montserrat_regular" />
+
+        <!-- Зарегистрироваться текст -->
+        <TextView
+            android:id="@+id/btnGoToRegister"
+            android:text="Зарегистрироваться"
+            android:textColor="@color/purple"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>

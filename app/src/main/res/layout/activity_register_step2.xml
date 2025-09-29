@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etLastName"
+        android:hint="Фамилия"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etFirstName"
+        android:hint="Имя"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etMiddleName"
+        android:hint="Отчество (необязательно)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etBirthDate"
+        android:hint="Дата рождения (MM/DD/YYYY)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/rgGender"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:text="Мужской"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:text="Женский"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnNextStep2"
+        android:text="Далее"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnBackStep2"
+        android:text="Назад"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
