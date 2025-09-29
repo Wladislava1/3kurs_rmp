@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,20 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegisterStep3Activity extends AppCompatActivity {
 
     private EditText etLicenseNumber, etIssueDate;
-    private Button btnUploadLicense, btnUploadPassport, btnNext, btnBack;
+    private ImageView btnUploadLicense, btnUploadPassport, btnBack;
+    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step3);
 
-        etLicenseNumber = findViewById(R.id.etLicenseNumber);
-        etIssueDate = findViewById(R.id.etIssueDate);
+        etLicenseNumber = findViewById(R.id.etDriverLicenseNumber);
+        etIssueDate = findViewById(R.id.etDriverLicenseDate);
 
-        btnUploadLicense = findViewById(R.id.btnUploadLicense);
-        btnUploadPassport = findViewById(R.id.btnUploadPassport);
+        btnUploadLicense = findViewById(R.id.ivUploadLicense);
+        btnUploadPassport = findViewById(R.id.ivUploadPassport);;
         btnNext = findViewById(R.id.btnNextStep3);
-        btnBack = findViewById(R.id.btnBackStep3);
+        btnBack = findViewById(R.id.ivBack);
 
         btnUploadLicense.setOnClickListener(v ->
                 Toast.makeText(this, "Загрузка фото ВУ (пока заглушка)", Toast.LENGTH_SHORT).show());

@@ -1,47 +1,209 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/etLicenseNumber"
-            android:hint="Номер водительского удостоверения"
+        <!-- Верхний блок: стрелка назад + заголовок -->
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Назад"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Создать аккаунт"
+                android:textSize="22sp"
+                android:textColor="@color/purple"
+                android:fontFamily="@font/montserrat_regular"
+                android:textStyle="bold"
+                android:layout_marginStart="64dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Фото профиля -->
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <!-- Фото профиля или плейсхолдер -->
+            <ImageView
+                android:id="@+id/ivProfilePhoto"
+                android:src="@drawable/photo"
+                android:contentDescription="Фото профиля"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Иконка наложения (например, "плюс") -->
+            <ImageView
+                android:id="@+id/ivAddPhotoIcon"
+                android:src="@drawable/vector"
+                android:contentDescription="Добавить фото"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:padding="4dp" />
+        </FrameLayout>
+
+        <TextView
+            android:text="Добавление фотографии поможет владельцам и арендаторам узнать друг друга, когда они будут забирать машину"
+            android:textSize="14sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Номер водительского удостоверения -->
+        <TextView
+            android:text="Номер водительского удостоверения"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/etIssueDate"
-            android:hint="Дата выдачи (DD/MM/YYYY)"
+            android:id="@+id/etDriverLicenseNumber"
+            android:hint="0000000000"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Дата выдачи водительского удостоверения -->
+        <TextView
+            android:text="Дата выдачи"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etDriverLicenseDate"
+                android:hint="DD/MM/YYYY"
+                android:inputType="date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"/>
+
+            <ImageView
+                android:id="@+id/ivCalendarLicense"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="Календарь"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Загрузка фото водительского удостоверения -->
+        <TextView
+            android:text="Загрузите фото водительского удостоверения"
+            android:textSize="14sp"
+            android:textColor="#404040"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/btnUploadLicense"
-            android:text="Загрузить фото ВУ"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivUploadLicense"
+                android:src="@drawable/upload"
+                android:contentDescription="Загрузить фото"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+            <TextView
+                android:id="@+id/tvUploadLicense"
+                android:text="Загрузить фото"
+                android:textSize="14sp"
+                android:textColor="@color/purple"
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Загрузка фото паспорта -->
+        <TextView
+            android:text="Загрузите фото паспорта"
+            android:textSize="14sp"
+            android:textColor="#404040"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/btnUploadPassport"
-            android:text="Загрузить фото паспорта"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
 
+            <ImageView
+                android:id="@+id/ivUploadPassport"
+                android:src="@drawable/upload"
+                android:contentDescription="Загрузить фото"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+            <TextView
+                android:id="@+id/tvUploadPassport"
+                android:text="Загрузить фото"
+                android:textSize="14sp"
+                android:textColor="@color/purple"
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Кнопка Далее -->
         <Button
             android:id="@+id/btnNextStep3"
             android:text="Далее"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btnBackStep3"
-            android:text="Назад"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_marginBottom="16dp"/>
     </LinearLayout>
 </ScrollView>

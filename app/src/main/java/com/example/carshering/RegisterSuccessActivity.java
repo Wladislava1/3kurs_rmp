@@ -15,7 +15,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_success);
 
-        btnContinue = findViewById(R.id.btnContinue);
+        btnContinue = findViewById(R.id.btnFinish);
 
         btnContinue.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);

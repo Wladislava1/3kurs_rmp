@@ -1,51 +1,139 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Верхний блок: стрелка назад + заголовок -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Назад"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Создать аккаунт"
+                android:textSize="22sp"
+                android:textColor="@color/purple"
+                android:fontFamily="@font/montserrat_regular"
+                android:textStyle="bold"
+                android:layout_marginStart="64dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Электронная почта -->
+        <TextView
+            android:text="Электронная почта"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:textColor="#404040"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/etEmail"
-            android:hint="Электронная почта"
+            android:hint="Введите электронную почту"
             android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Пароль -->
+        <TextView
+            android:text="Придумайте пароль"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/etPassword"
-            android:hint="Пароль"
+            android:hint="Введите пароль"
+            android:textSize="16sp"
             android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Повтор пароля -->
+        <TextView
+            android:text="Повторите пароль"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/etRepeatPassword"
-            android:hint="Повторите пароль"
+            android:hint="Введите пароль"
+            android:textSize="16sp"
             android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:layout_marginBottom="20dp" />
 
-        <CheckBox
-            android:id="@+id/cbAgreement"
-            android:text="Согласен с условиями и политикой конфиденциальности"
+        <!-- Согласие -->
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
 
+            <CheckBox
+                android:id="@+id/cbAgreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Я согласен с условиями обслуживания и политикой конфиденциальности"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Кнопка Далее -->
         <Button
             android:id="@+id/btnNextStep1"
             android:text="Далее"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"/>
 
-        <Button
-            android:id="@+id/btnBackStep1"
-            android:text="Назад"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

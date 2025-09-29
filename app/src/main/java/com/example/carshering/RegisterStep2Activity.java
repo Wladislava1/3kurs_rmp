@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -13,21 +14,22 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     private EditText etLastName, etFirstName, etMiddleName, etBirthDate;
     private RadioGroup rgGender;
-    private Button btnNext, btnBack;
+    private Button btnNext;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_step2);
 
-        etLastName = findViewById(R.id.etLastName);
-        etFirstName = findViewById(R.id.etFirstName);
-        etMiddleName = findViewById(R.id.etMiddleName);
+        etLastName = findViewById(R.id.etSurname);
+        etFirstName = findViewById(R.id.etName);
+        etMiddleName = findViewById(R.id.etPatronymic);
         etBirthDate = findViewById(R.id.etBirthDate);
         rgGender = findViewById(R.id.rgGender);
 
         btnNext = findViewById(R.id.btnNextStep2);
-        btnBack = findViewById(R.id.btnBackStep2);
+        btnBack = findViewById(R.id.ivBack);
 
         btnNext.setOnClickListener(v -> {
             String last = etLastName.getText().toString().trim();

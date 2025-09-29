@@ -20,6 +20,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
             startActivity(new Intent(this, RegisterStep2Activity.class));
         });
 
-        binding.btnBackStep1.setOnClickListener(v -> finish());
+        binding.ivBack.setOnClickListener(v -> finish());
     }
 }

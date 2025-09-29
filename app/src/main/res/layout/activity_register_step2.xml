@@ -1,62 +1,185 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/etLastName"
-        android:hint="Фамилия"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/etFirstName"
-        android:hint="Имя"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/etMiddleName"
-        android:hint="Отчество (необязательно)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/etBirthDate"
-        android:hint="Дата рождения (MM/DD/YYYY)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <RadioGroup
-        android:id="@+id/rgGender"
-        android:orientation="horizontal"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/rbMale"
-            android:text="Мужской"
+        <!-- Верхний блок: стрелка назад + заголовок -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Назад"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Создать аккаунт"
+                android:textSize="22sp"
+                android:textColor="@color/purple"
+                android:fontFamily="@font/montserrat_regular"
+                android:textStyle="bold"
+                android:layout_marginStart="64dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Фамилия -->
+        <TextView
+            android:text="Фамилия"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etSurname"
+            android:hint="Введите фамилию"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Имя -->
+        <TextView
+            android:text="Имя"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:hint="Введите имя"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Отчество -->
+        <TextView
+            android:text="Отчество"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etPatronymic"
+            android:hint="Введите отчество"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Дата рождения -->
+        <TextView
+            android:text="Дата рождения"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_register"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="14dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivCalendar"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="Календарь"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"/>
+
+            <EditText
+                android:id="@+id/etBirthDate"
+                android:hint="DD/MM/YYYY"
+                android:inputType="date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <!-- Пол -->
+        <TextView
+            android:text="Пол"
+            android:textSize="16sp"
+            android:textColor="#404040"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
 
-        <RadioButton
-            android:id="@+id/rbFemale"
-            android:text="Женский"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:text="Мужской"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnNextStep2"
-        android:text="Далее"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:text="Женский"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"/>
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/btnBackStep2"
-        android:text="Назад"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <!-- Кнопка Далее -->
+        <Button
+            android:id="@+id/btnNextStep2"
+            android:text="Далее"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/button_background"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
