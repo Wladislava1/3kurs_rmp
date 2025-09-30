@@ -21,5 +21,33 @@ public class RegisterStep1Activity extends AppCompatActivity {
         });
 
         binding.ivBack.setOnClickListener(v -> finish());
+
+        binding.etPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_END = 2;
+            if (event.getRawX() >= (binding.etPassword.getRight() - binding.etPassword.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
+                if (binding.etPassword.getInputType() == 129) { // скрытый пароль
+                    binding.etPassword.setInputType(145); // показать
+                } else {
+                    binding.etPassword.setInputType(129); // скрыть
+                }
+                binding.etPassword.setSelection(binding.etPassword.getText().length());
+                return true;
+            }
+            return false;
+        });
+
+        binding.etRepeatPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_END = 2;
+            if (event.getRawX() >= (binding.etRepeatPassword.getRight() - binding.etRepeatPassword.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
+                if (binding.etRepeatPassword.getInputType() == 129) {
+                    binding.etRepeatPassword.setInputType(145);
+                } else {
+                    binding.etRepeatPassword.setInputType(129);
+                }
+                binding.etRepeatPassword.setSelection(binding.etRepeatPassword.getText().length());
+                return true;
+            }
+            return false;
+        });
     }
 }

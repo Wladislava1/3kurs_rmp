@@ -84,19 +84,21 @@ public class OnboardingActivity extends AppCompatActivity {
 
         for (int i = 0; i < count; i++) {
             View indicator = new View(this);
-            LinearLayout.LayoutParams params;
 
-            if (i == 0) { // первая активная
-                indicator.setBackgroundResource(R.drawable.indicator_active);
-                params = new LinearLayout.LayoutParams(dpToPx(48), dpToPx(8)); // активная длиннее
-            } else { // остальные неактивные
-                indicator.setBackgroundResource(R.drawable.indicator_inactive);
-                params = new LinearLayout.LayoutParams(dpToPx(24), dpToPx(8)); // неактивная длиннее
-            }
+            LinearLayout.LayoutParams params =
+                    new LinearLayout.LayoutParams(dpToPx(48), dpToPx(8)); // макс ширина
 
             params.setMargins(dpToPx(4), 0, dpToPx(4), 0);
-            indicator.setLayoutParams(params);
 
+            if (i == 0) {
+                params.width = dpToPx(48); // активный
+                indicator.setBackgroundResource(R.drawable.indicator_active);
+            } else {
+                params.width = dpToPx(24); // неактивный
+                indicator.setBackgroundResource(R.drawable.indicator_inactive);
+            }
+
+            indicator.setLayoutParams(params);
             binding.indicatorLayout.addView(indicator);
         }
     }
@@ -108,16 +110,14 @@ public class OnboardingActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) child.getLayoutParams();
 
             if (i == index) {
+                params.width = dpToPx(48);
                 child.setBackgroundResource(R.drawable.indicator_active);
-                params.width = dpToPx(48); // активная длиннее
-                params.height = dpToPx(8);
             } else {
+                params.width = dpToPx(24);
                 child.setBackgroundResource(R.drawable.indicator_inactive);
-                params.width = dpToPx(24); // неактивная
-                params.height = dpToPx(8);
             }
 
-            child.setLayoutParams(params); // применяем новые размеры
+            child.setLayoutParams(params);
         }
     }
 

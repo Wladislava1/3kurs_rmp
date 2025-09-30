@@ -41,6 +41,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/montserrat_regular"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="60dp"
             android:textColor="#404040"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -69,15 +70,18 @@
 
         <EditText
             android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Введите пароль"
             android:textSize="16sp"
             android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:background="@drawable/button_register"
             android:paddingVertical="10dp"
             android:paddingHorizontal="14dp"
-            android:layout_marginBottom="16dp" />
+            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginBottom="16dp"/>
 
         <!-- Повтор пароля -->
         <TextView
@@ -93,6 +97,8 @@
             android:id="@+id/etRepeatPassword"
             android:hint="Введите пароль"
             android:textSize="16sp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

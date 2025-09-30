@@ -41,6 +41,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp"
+        android:measureWithLargestChild="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,28 +52,29 @@
             android:id="@+id/indicatorLayout"
             android:layout_width="0dp"
             android:layout_height="15dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="50dp"
-            android:layout_weight="1"
+            android:orientation="horizontal"
             android:gravity="start"
-            android:orientation="horizontal" />
+            android:layout_weight="1"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="16dp"/>
 
-        <!-- Кнопка "Далее" справа -->
+        <!-- Кнопка "Далее" -->
         <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="16dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             android:paddingEnd="42dp"
-            android:fontFamily="@font/montserrat_regular"
             android:paddingStart="42dp"
+            android:fontFamily="@font/montserrat_regular"
             android:textSize="14sp"
             android:textColor="@android:color/white"
             android:text="Далее"/>
 
+        <!-- Кнопка "Поехали" -->
         <Button
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
@@ -86,8 +88,7 @@
             android:paddingStart="42dp"
             android:paddingBottom="14dp"
             android:textColor="@android:color/white"
-            android:visibility="gone"
-            android:layout_marginEnd="30dp"/>
+            android:visibility="gone"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
