@@ -31,16 +31,33 @@ public class RegisterStep2Activity extends AppCompatActivity {
         btnNext = findViewById(R.id.btnNextStep2);
         btnBack = findViewById(R.id.ivBack);
 
+        String email = getIntent().getStringExtra("email");
+        String password = getIntent().getStringExtra("password");
+
         btnNext.setOnClickListener(v -> {
             String last = etLastName.getText().toString().trim();
             String first = etFirstName.getText().toString().trim();
+            String middle = etMiddleName.getText().toString().trim();
             String birth = etBirthDate.getText().toString().trim();
             int genderId = rgGender.getCheckedRadioButtonId();
 
-            if (last.isEmpty() || first.isEmpty() || birth.isEmpty() || genderId == -1) {
+            if (last.isEmpty() || first.isEmpty() || middle.isEmpty() || birth.isEmpty() || genderId == -1) {
                 Toast.makeText(this, "Пожалуйста, заполните все обязательные поля", Toast.LENGTH_SHORT).show();
             } else {
+                // Создаём Intent на Step3
                 Intent intent = new Intent(this, RegisterStep3Activity.class);
+
+                // Передаём данные из Step1
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+
+                // Передаём данные из Step2
+                intent.putExtra("firstName", first);
+                intent.putExtra("lastName", last);
+                intent.putExtra("middleName", middle);
+                intent.putExtra("birthDate", birth);
+                intent.putExtra("genderId", genderId);
+
                 startActivity(intent);
             }
         });

@@ -2,6 +2,8 @@ package com.example.carshering;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carshering.databinding.ActivityRegisterStep1Binding;
@@ -17,7 +19,20 @@ public class RegisterStep1Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnNextStep1.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegisterStep2Activity.class));
+            // Получаем email и пароль из полей ввода
+            String email = binding.etEmail.getText().toString().trim();
+            String password = binding.etPassword.getText().toString().trim();
+
+            if(email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Пожалуйста, введите email и пароль", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Создаём Intent и передаём данные на Step2
+            Intent intent = new Intent(this, RegisterStep2Activity.class);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            startActivity(intent);
         });
 
         binding.ivBack.setOnClickListener(v -> finish());

@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.carshering.databinding.ActivityLoginBinding;
+import com.example.carshering.model.User;
+import com.example.carshering.api.ApiClient;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -60,17 +67,27 @@ public class LoginActivity extends AppCompatActivity {
             String email = binding.etLoginEmail.getText().toString().trim();
             String password = binding.etLoginPassword.getText().toString().trim();
 
-            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                binding.etLoginEmail.setError("Введите корректный email");
-                return;
-            }
+            User user = new User(email, password);
 
-            // TODO: тут запрос на авторизацию
-            // Заглушка успех
-            Toast.makeText(this, "Авторизация успешна", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+            ApiClient.getApiService().login(user).enqueue(new retrofit2.Callback<okhttp3.ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    if(response.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Авторизация успешна", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Неверная почта или пароль", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, "Ошибка сети", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
+
 
         // Кнопка "Войти через Google"
         binding.btnGoogleLogin.setOnClickListener(v -> {
