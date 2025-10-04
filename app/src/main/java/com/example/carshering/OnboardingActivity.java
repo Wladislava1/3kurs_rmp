@@ -1,5 +1,6 @@
 package com.example.carshering;
 
+import com.example.carshering.utils.PrefManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carshering.databinding.ActivityOnboardingBinding;
+import com.example.carshering.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,22 @@ public class OnboardingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PrefManager prefManager = new PrefManager(this);
+
+        // Если уже запускалось, сразу переходим к WelcomeActivity
+        if (!prefManager.isFirstTimeLaunch()) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
+            return;
+        }
+
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            startActivity(new Intent(this, NoConnectionActivity.class));
+            finish();
+            return;
+        }
+
         binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -122,6 +140,8 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void goToWelcome() {
+        PrefManager prefManager = new PrefManager(this);
+        prefManager.setFirstTimeLaunch(false);
         startActivity(new Intent(this, WelcomeActivity.class));
         finish();
     }

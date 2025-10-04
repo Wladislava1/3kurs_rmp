@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.example.carshering.model.User;
 import com.example.carshering.api.ApiClient;
+import com.example.carshering.utils.NetworkUtils;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -50,6 +51,13 @@ public class RegisterStep3Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            startActivity(new Intent(this, NoConnectionActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_register_step3);
 
         btnUploadLicense = findViewById(R.id.ivUploadLicense);

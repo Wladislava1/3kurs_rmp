@@ -28,6 +28,10 @@
             android:name=".WelcomeActivity"
             android:exported="false"/>
 
+        <activity
+            android:name=".NoConnectionActivity"
+            android:exported="false"/>
+
         <!-- Онбординг -->
         <activity
             android:name=".OnboardingActivity"

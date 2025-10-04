@@ -22,7 +22,7 @@ public class NoConnectionActivity extends AppCompatActivity {
 
         binding.retryButton.setOnClickListener(v -> {
             if (isNetworkAvailable()) {
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 finish();
             } else {
                 binding.errorText.setText("Все еще нет сети. Попробуйте позже.");

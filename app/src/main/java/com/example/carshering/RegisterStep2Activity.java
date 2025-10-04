@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.utils.NetworkUtils;
+
 import java.util.Calendar;
 
 public class RegisterStep2Activity extends AppCompatActivity {
@@ -27,6 +29,13 @@ public class RegisterStep2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            startActivity(new Intent(this, NoConnectionActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_register_step2);
 
         etLastName = findViewById(R.id.etSurname);

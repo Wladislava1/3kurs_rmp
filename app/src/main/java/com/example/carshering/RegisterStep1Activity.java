@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.MotionEvent;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.carshering.databinding.ActivityRegisterStep1Binding;
+import com.example.carshering.utils.NetworkUtils;
 
 public class RegisterStep1Activity extends AppCompatActivity {
 
@@ -17,6 +18,13 @@ public class RegisterStep1Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            startActivity(new Intent(this, NoConnectionActivity.class));
+            finish();
+            return;
+        }
+
         binding = ActivityRegisterStep1Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
