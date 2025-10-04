@@ -2,13 +2,16 @@ package com.example.carshering;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 public class RegisterStep2Activity extends AppCompatActivity {
 
@@ -16,6 +19,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private RadioGroup rgGender;
     private Button btnNext;
     private ImageView btnBack;
+    private Calendar cal = Calendar.getInstance();
+
+    private String current = "";
+    private String ddmmyyyy = "DDMMYYYY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +38,62 @@ public class RegisterStep2Activity extends AppCompatActivity {
         btnNext = findViewById(R.id.btnNextStep2);
         btnBack = findViewById(R.id.ivBack);
 
+        btnNext.setEnabled(false);
+        btnNext.setAlpha(0.5f);
+
         String email = getIntent().getStringExtra("email");
         String password = getIntent().getStringExtra("password");
+
+        // Маска для ввода даты
+        etBirthDate.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals(current)) {
+                    String clean = s.toString().replaceAll("[^\\d]", "");
+                    String cleanC = current.replaceAll("[^\\d]", "");
+
+                    int cl = clean.length();
+                    int sel = cl;
+                    for (int i = 2; i <= cl && i < 6; i += 2) sel++;
+                    if (clean.equals(cleanC)) sel--;
+
+                    if (clean.length() < 8) {
+                        clean = clean + ddmmyyyy.substring(clean.length());
+                    } else {
+                        int day = Integer.parseInt(clean.substring(0,2));
+                        int mon = Integer.parseInt(clean.substring(2,4));
+                        int year = Integer.parseInt(clean.substring(4,8));
+
+                        mon = Math.max(1, Math.min(mon, 12));
+                        cal.set(Calendar.MONTH, mon-1);
+                        year = Math.max(1900, Math.min(year, 2007));
+                        cal.set(Calendar.YEAR, year);
+
+                        day = Math.min(day, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        clean = String.format("%02d%02d%04d", day, mon, year);
+                    }
+
+                    clean = String.format("%s/%s/%s",
+                            clean.substring(0,2),
+                            clean.substring(2,4),
+                            clean.substring(4,8));
+
+                    current = clean;
+                    etBirthDate.setText(current);
+                    etBirthDate.setSelection(Math.min(sel, current.length()));
+
+                    validateForm();
+                }
+            }
+        });
+
+        // Слушатели для текстовых полей и радио-кнопок
+        etLastName.addTextChangedListener(formWatcher);
+        etFirstName.addTextChangedListener(formWatcher);
+        etMiddleName.addTextChangedListener(formWatcher);
+        rgGender.setOnCheckedChangeListener((group, checkedId) -> validateForm());
 
         btnNext.setOnClickListener(v -> {
             String last = etLastName.getText().toString().trim();
@@ -41,27 +102,73 @@ public class RegisterStep2Activity extends AppCompatActivity {
             String birth = etBirthDate.getText().toString().trim();
             int genderId = rgGender.getCheckedRadioButtonId();
 
-            if (last.isEmpty() || first.isEmpty() || middle.isEmpty() || birth.isEmpty() || genderId == -1) {
-                Toast.makeText(this, "Пожалуйста, заполните все обязательные поля", Toast.LENGTH_SHORT).show();
-            } else {
-                // Создаём Intent на Step3
-                Intent intent = new Intent(this, RegisterStep3Activity.class);
-
-                // Передаём данные из Step1
-                intent.putExtra("email", email);
-                intent.putExtra("password", password);
-
-                // Передаём данные из Step2
-                intent.putExtra("firstName", first);
-                intent.putExtra("lastName", last);
-                intent.putExtra("middleName", middle);
-                intent.putExtra("birthDate", birth);
-                intent.putExtra("genderId", genderId);
-
-                startActivity(intent);
+            // Проверка заполненности
+            if (last.isEmpty() || first.isEmpty() || birth.isEmpty() || genderId == -1) {
+                if (last.isEmpty()) etLastName.setError("Пожалуйста, заполните все обязательные поля.");
+                if (first.isEmpty()) etFirstName.setError("Пожалуйста, заполните все обязательные поля.");
+                if (birth.isEmpty()) etBirthDate.setError("Пожалуйста, заполните все обязательные поля.");
+                return;
             }
+
+            // Проверка даты
+            if (!isValidDate(birth)) {
+                etBirthDate.setError("Введите корректную дату рождения.");
+                return;
+            }
+
+            // Переход к Step3
+            Intent intent = new Intent(this, RegisterStep3Activity.class);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            intent.putExtra("firstName", first);
+            intent.putExtra("lastName", last);
+            intent.putExtra("middleName", middle);
+            intent.putExtra("birthDate", birth);
+            intent.putExtra("genderId", genderId);
+            startActivity(intent);
         });
 
         btnBack.setOnClickListener(v -> finish());
     }
+
+    private boolean isValidDate(String date) {
+        if (date == null || !date.matches("\\d{2}/\\d{2}/\\d{4}")) return false;
+        String[] parts = date.split("/");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+
+        if (month < 1 || month > 12) return false;
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.YEAR, year);
+
+        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        return day >= 1 && day <= maxDay;
+    }
+
+    private void validateForm() {
+        String last = etLastName.getText().toString().trim();
+        String first = etFirstName.getText().toString().trim();
+        String birth = etBirthDate.getText().toString().trim();
+        int genderId = rgGender.getCheckedRadioButtonId();
+
+        boolean isValid = !last.isEmpty() && !first.isEmpty() && !birth.isEmpty()
+                && isValidDate(birth) && genderId != -1;
+
+        // Ошибки для пустых полей
+        if (last.isEmpty()) etLastName.setError("Пожалуйста, заполните все обязательные поля."); else etLastName.setError(null);
+        if (first.isEmpty()) etFirstName.setError("Пожалуйста, заполните все обязательные поля."); else etFirstName.setError(null);
+        if (birth.isEmpty()) etBirthDate.setError("Пожалуйста, заполните все обязательные поля.");
+        else if (!isValidDate(birth)) etBirthDate.setError("Введите корректную дату рождения.");
+        else etBirthDate.setError(null);
+
+        btnNext.setEnabled(isValid);
+        btnNext.setAlpha(isValid ? 1f : 0.5f);
+    }
+
+    private final TextWatcher formWatcher = new TextWatcher() {
+        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override public void afterTextChanged(Editable s) { validateForm(); }
+    };
 }

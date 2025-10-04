@@ -113,6 +113,14 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
+            <ImageView
+                android:id="@+id/ivCalendarLicense"
+                android:src="@drawable/ic_calendar"
+                android:contentDescription="Календарь"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"/>
+
             <EditText
                 android:id="@+id/etDriverLicenseDate"
                 android:hint="DD/MM/YYYY"
@@ -121,13 +129,6 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"/>
-
-            <ImageView
-                android:id="@+id/ivCalendarLicense"
-                android:src="@drawable/ic_calendar"
-                android:contentDescription="Календарь"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <!-- Загрузка фото водительского удостоверения -->
@@ -151,7 +152,8 @@
                 android:src="@drawable/upload"
                 android:contentDescription="Загрузить фото"
                 android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:layout_height="40dp"
+                />
 
             <TextView
                 android:id="@+id/tvUploadLicense"
@@ -162,7 +164,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tvLicenseError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"/>
         <!-- Загрузка фото паспорта -->
         <TextView
             android:text="Загрузите фото паспорта"
@@ -195,6 +202,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/tvPassportError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"/>
 
         <!-- Кнопка Далее -->
         <Button
