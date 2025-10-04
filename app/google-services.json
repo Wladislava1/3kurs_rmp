@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "523834459733",
+    "project_id": "carsharing-df548",
+    "storage_bucket": "carsharing-df548.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523834459733:android:cdd38ce9df6d31e46bf6dc",
+        "android_client_info": {
+          "package_name": "com.example.carshering"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523834459733-9j7qthoaqqj3b7ncuv76diqdi267f5a5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carshering",
+            "certificate_hash": "814d495b716f885ceb379ef861ce0fe5c6158513"
+          }
+        },
+        {
+          "client_id": "523834459733-1fbbd06f1p3utr60a9ji61dhr45atq7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOfMKLpG76UgKl1XRiGrIDIX2D1ni2EA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523834459733-1fbbd06f1p3utr60a9ji61dhr45atq7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

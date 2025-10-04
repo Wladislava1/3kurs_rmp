@@ -4,13 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
-import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.carshering.databinding.ActivityLoginBinding;
 import com.example.carshering.model.User;
 import com.example.carshering.api.ApiClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.AuthCredential;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,6 +27,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
+    private GoogleSignInClient googleSignInClient; // Поле класса для доступа из onActivityResult
+    private FirebaseAuth auth; // FirebaseAuth объект
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnLogin.setEnabled(false); // по умолчанию неактивна
+        auth = FirebaseAuth.getInstance();
+
+        // Настройка Google Sign-In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Проверка полей для активации кнопки "Войти"
         TextWatcher watcher = new TextWatcher() {
@@ -46,32 +63,15 @@ public class LoginActivity extends AppCompatActivity {
         binding.etLoginEmail.addTextChangedListener(watcher);
         binding.etLoginPassword.addTextChangedListener(watcher);
 
-        // Показ/скрытие пароля
-        binding.etLoginPassword.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_eye,0);
-        binding.etLoginPassword.setOnTouchListener((v, event) -> {
-            final int DRAWABLE_RIGHT = 2;
-            if(event.getRawX() >= (binding.etLoginPassword.getRight() - binding.etLoginPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                if (binding.etLoginPassword.getInputType() == (129)) { // текст пароля
-                    binding.etLoginPassword.setInputType(145); // показать
-                } else {
-                    binding.etLoginPassword.setInputType(129); // скрыть
-                }
-                binding.etLoginPassword.setSelection(binding.etLoginPassword.getText().length());
-                return true;
-            }
-            return false;
-        });
-
-        // Кнопка "Войти"
+        // Кнопка "Войти" через email/password
         binding.btnLogin.setOnClickListener(v -> {
             String email = binding.etLoginEmail.getText().toString().trim();
             String password = binding.etLoginPassword.getText().toString().trim();
-
             User user = new User(email, password);
 
-            ApiClient.getApiService().login(user).enqueue(new retrofit2.Callback<okhttp3.ResponseBody>() {
+            ApiClient.getApiService().login(user).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(response.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Авторизация успешна", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -88,21 +88,45 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-
         // Кнопка "Войти через Google"
         binding.btnGoogleLogin.setOnClickListener(v -> {
-            // TODO: Google OAuth
-            Toast.makeText(this, "Google авторизация пока заглушка", Toast.LENGTH_SHORT).show();
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, 100);
         });
 
-        // Кнопка "Зарегистрироваться"
+        // Переход на регистрацию
         binding.btnGoToRegister.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterStep1Activity.class))
         );
+    }
 
-        // Забыли пароль
-        binding.tvForgotPassword.setOnClickListener(v ->
-                Toast.makeText(this, "Восстановление пароля пока заглушка", Toast.LENGTH_SHORT).show()
-        );
+    // Обработка результата Google Sign-In
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 100) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Toast.makeText(this, "Ошибка Google Sign-In", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // Авторизация через Firebase
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        auth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Toast.makeText(this, "Авторизация через Google успешна", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

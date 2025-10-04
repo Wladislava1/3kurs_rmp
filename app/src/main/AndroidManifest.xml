@@ -26,12 +26,7 @@
 
         <activity
             android:name=".WelcomeActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"/>
 
         <!-- Онбординг -->
         <activity
@@ -43,6 +38,10 @@
             android:name=".LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
 
         <!-- Регистрация шаг 1 -->
         <activity
