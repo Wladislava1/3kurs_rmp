@@ -1,11 +1,10 @@
 package com.example.carshering;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carshering.databinding.ActivityNoConnectionBinding;
@@ -25,7 +24,7 @@ public class NoConnectionActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             } else {
-                binding.errorText.setText("Все еще нет сети. Попробуйте позже.");
+                binding.errorText.setText(R.string.no_retry_one);
             }
         });
     }

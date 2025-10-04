@@ -11,8 +11,16 @@ public class OnboardingItem {
         this.description = description;
     }
 
-    public int getImageResId() { return imageResId; }
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
+    public int getImageResId() {
+        return imageResId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
 

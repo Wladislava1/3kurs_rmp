@@ -13,8 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.TextView;
 import android.view.View;
 
@@ -35,7 +37,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
     private Button btnNext;
     private Calendar cal = Calendar.getInstance();
     private String currentDate = "";
-    private final String ddmmyyyy = "DDMMYYYY";
+    private final String ddmmyyyy = getString(R.string.ddmmyyyy);
     private Drawable licensePlaceholder, passportPlaceholder;
 
     private boolean isLicensePhotoUploaded = false;
@@ -62,41 +64,47 @@ public class RegisterStep3Activity extends AppCompatActivity {
 
         btnUploadLicense = findViewById(R.id.ivUploadLicense);
         btnUploadPassport = findViewById(R.id.ivUploadPassport);
-        // Сохраняем плейсхолдеры
+
         licensePlaceholder = btnUploadLicense.getDrawable();
         passportPlaceholder = btnUploadPassport.getDrawable();
-        // Поля ввода
+
         etLicenseNumber = findViewById(R.id.etDriverLicenseNumber);
         etIssueDate = findViewById(R.id.etDriverLicenseDate);
 
-        // Кнопки загрузки документов
         btnUploadLicense = findViewById(R.id.ivUploadLicense);
         btnUploadPassport = findViewById(R.id.ivUploadPassport);
         btnBack = findViewById(R.id.ivBack);
         btnNext = findViewById(R.id.btnNextStep3);
 
-        // Фото профиля
+
         ivProfilePhoto = findViewById(R.id.ivProfilePhoto);
         ivAddPhotoIcon = findViewById(R.id.ivAddPhotoIcon);
 
-        // Изначально кнопка "Далее" заблокирована
         btnNext.setEnabled(false);
         btnNext.setAlpha(0.5f);
 
         Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String password = intent.getStringExtra("password");
-        String firstName = intent.getStringExtra("firstName");
-        String lastName = intent.getStringExtra("lastName");
-        String middleName = intent.getStringExtra("middleName");
-        String birthDate = intent.getStringExtra("birthDate");
-        int genderId = intent.getIntExtra("genderId", -1);
-        String gender = (genderId == R.id.rbMale) ? "Male" : "Female";
+        String email = intent.getStringExtra(getString(R.string.email));
+        String password = intent.getStringExtra(getString(R.string.password));
+        String firstName = intent.getStringExtra(getString(R.string.firstname));
+        String lastName = intent.getStringExtra(getString(R.string.lastname));
+        String middleName = intent.getStringExtra(getString(R.string.middlename));
+        String birthDate = intent.getStringExtra(getString(R.string.birthDate));
+        int genderId = intent.getIntExtra(getString(R.string.genderId), -1);
+        String gender =
+                (genderId == R.id.rbMale) ? getString(R.string.Male) : getString(R.string.Female);
 
-        // Маска даты выдачи ВУ
         etIssueDate.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void beforeTextChanged(CharSequence s,
+                                          int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s,
+                                      int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().equals(currentDate)) {
@@ -112,9 +120,9 @@ public class RegisterStep3Activity extends AppCompatActivity {
                     if (clean.length() < 8) {
                         clean = clean + ddmmyyyy.substring(clean.length());
                     } else {
-                        int day = Integer.parseInt(clean.substring(0,2));
-                        int month = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
+                        int day = Integer.parseInt(clean.substring(0, 2));
+                        int month = Integer.parseInt(clean.substring(2, 4));
+                        int year = Integer.parseInt(clean.substring(4, 8));
 
                         month = Math.max(1, Math.min(month, 12));
                         cal.set(Calendar.MONTH, month - 1);
@@ -122,15 +130,15 @@ public class RegisterStep3Activity extends AppCompatActivity {
                         cal.set(Calendar.YEAR, year);
 
                         day = Math.min(day, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-                        clean = String.format("%02d%02d%04d", day, month, year);
+                        clean = String.format(getString(R.string.mask), day, month, year);
                     }
 
-                    clean = String.format("%s/%s/%s",
-                            clean.substring(0,2),
-                            clean.substring(2,4),
-                            clean.substring(4,8));
+                    clean = String.format(getString(R.string.format),
+                            clean.substring(0, 2),
+                            clean.substring(2, 4),
+                            clean.substring(4, 8));
 
-                    sel = Math.max(sel,0);
+                    sel = Math.max(sel, 0);
                     currentDate = clean;
                     etIssueDate.setText(currentDate);
                     etIssueDate.setSelection(Math.min(sel, currentDate.length()));
@@ -140,11 +148,21 @@ public class RegisterStep3Activity extends AppCompatActivity {
             }
         });
 
-        // Слушатели для проверки формы
         etLicenseNumber.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { validateForm(); }
-            @Override public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s,
+                                          int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s,
+                                      int start, int before, int count) {
+                validateForm();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
         etLicenseNumber.setFilters(new android.text.InputFilter[]{
                 (source, start, end, dest, dstart, dend) -> {
@@ -158,16 +176,13 @@ public class RegisterStep3Activity extends AppCompatActivity {
         });
         etIssueDate.addTextChangedListener(textWatcher);
 
-        // Загрузка фото ВУ
+
         btnUploadLicense.setOnClickListener(v -> openGallery(PICK_LICENSE_PHOTO));
 
-        // Загрузка фото паспорта
         btnUploadPassport.setOnClickListener(v -> openGallery(PICK_PASSPORT_PHOTO));
 
-        // Загрузка аватарки
         ivAddPhotoIcon.setOnClickListener(v -> showPhotoOptions());
 
-        // Кнопка Далее
         btnNext.setOnClickListener(v -> {
             String license = etLicenseNumber.getText().toString().trim();
             String issueDate = etIssueDate.getText().toString().trim();
@@ -176,16 +191,17 @@ public class RegisterStep3Activity extends AppCompatActivity {
             boolean isPassportPhotoUploaded = btnUploadPassport.getDrawable() != passportPlaceholder;
 
             if (!isLicensePhotoUploaded || !isPassportPhotoUploaded) {
-                Toast.makeText(this, "Пожалуйста, загрузите фото паспорта и водительского удостоверения", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.upload_photo_passport_licence),
+                        Toast.LENGTH_LONG).show();
                 return;
             }
 
             if (license.isEmpty() || !isValidDate(issueDate)) {
-                Toast.makeText(this, "Пожалуйста, заполните все обязательные поля корректно", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.all_input),
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Создание объекта пользователя
             User user = new User(email, password);
             user.setFirstName(firstName);
             user.setLastName(lastName);
@@ -195,34 +211,39 @@ public class RegisterStep3Activity extends AppCompatActivity {
             user.setDriverLicenseNumber(license);
             user.setDriverLicenseIssueDate(issueDate);
 
-            // Отправка на сервер
-            ApiClient.getApiService().register(user).enqueue(new retrofit2.Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(RegisterStep3Activity.this, "Регистрация успешна", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterStep3Activity.this, RegisterSuccessActivity.class));
-                    } else {
-                        Toast.makeText(RegisterStep3Activity.this, "Пользователь уже существует", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            ApiClient.getApiService().register(user).enqueue(
+                    new retrofit2.Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call,
+                                               retrofit2.Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(RegisterStep3Activity.this,
+                                        getString(R.string.register_success), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(RegisterStep3Activity.this,
+                                        RegisterSuccessActivity.class));
+                            } else {
+                                Toast.makeText(RegisterStep3Activity.this,
+                                        getString(R.string.user_alreade_exist), Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    t.printStackTrace();
-                    Toast.makeText(RegisterStep3Activity.this, "Ошибка сети: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            t.printStackTrace();
+                            Toast.makeText(RegisterStep3Activity.this,
+                                    getString(R.string.error_internet) + t.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
         });
 
         btnBack.setOnClickListener(v -> finish());
     }
 
-    // Выбор фото профиля: галерея или камера
     private void showPhotoOptions() {
-        String[] options = {"Выбрать из галереи", "Сделать фото"};
+        String[] options = {getString(R.string.galerry), getString(R.string.make_photo)};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Добавить фото профиля")
+        builder.setTitle(getString(R.string.add_photo_profil))
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) openGallery(PICK_PROFILE_PHOTO);
                     else openCamera();
@@ -260,19 +281,28 @@ public class RegisterStep3Activity extends AppCompatActivity {
                     ivProfilePhoto.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(this, "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 }
             } else if (requestCode == CAPTURE_PROFILE_PHOTO) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                Bitmap photo = (Bitmap) data.getExtras().get(getString(R.string.data));
                 ivProfilePhoto.setImageBitmap(photo);
             }
         }
     }
 
     private final TextWatcher textWatcher = new TextWatcher() {
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) { validateForm(); }
-        @Override public void afterTextChanged(Editable s) {}
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            validateForm();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
     };
 
     private boolean isValidDate(String date) {
@@ -289,6 +319,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         return day >= 1 && day <= maxDay;
     }
+
     private void validateForm() {
         String license = etLicenseNumber.getText().toString().trim();
         String date = etIssueDate.getText().toString().trim();
@@ -301,44 +332,42 @@ public class RegisterStep3Activity extends AppCompatActivity {
         boolean isLicenseValid = license.matches("\\d{10}");
         boolean isDateValid = isValidDate(date);
 
-        // Проверка загруженных фото
         boolean isLicensePhotoUploaded = btnUploadLicense.getDrawable() != licensePlaceholder;
         boolean isPassportPhotoUploaded = btnUploadPassport.getDrawable() != passportPlaceholder;
 
         boolean allPhotosUploaded = isLicensePhotoUploaded && isPassportPhotoUploaded;
-        // Общая валидность формы
         boolean isValid = isLicenseFilled && isDateFilled && isLicenseValid && isDateValid && allPhotosUploaded;
         btnNext.setEnabled(isValid);
         btnNext.setAlpha(isValid ? 1f : 0.5f);
 
         if (!isLicensePhotoUploaded) {
-            tvLicenseError.setText("Пожалуйста, загрузите фото водительского удостоверения");
+            tvLicenseError.setText(getString(R.string.upload_licence_photo));
             tvLicenseError.setVisibility(View.VISIBLE);
         } else {
             tvLicenseError.setVisibility(View.GONE);
         }
 
         if (!isPassportPhotoUploaded) {
-            tvPassportError.setText("Пожалуйста, загрузите фото паспорта");
+            tvPassportError.setText(getString(R.string.upload_passport_photo));
             tvPassportError.setVisibility(View.VISIBLE);
         } else {
             tvPassportError.setVisibility(View.GONE);
         }
         // Сообщения об ошибках
         if (!isLicenseFilled || !isDateFilled) {
-            if (!isLicenseFilled) etLicenseNumber.setError("Пожалуйста, заполните все обязательные поля.");
-            if (!isDateFilled) etIssueDate.setError("Пожалуйста, заполните все обязательные поля.");
+            if (!isLicenseFilled) etLicenseNumber.setError(getString(R.string.all_input));
+            if (!isDateFilled) etIssueDate.setError(getString(R.string.all_input));
         } else {
             etLicenseNumber.setError(null);
             etIssueDate.setError(null);
         }
 
         if (isDateFilled && !isDateValid) {
-            etIssueDate.setError("Введите корректную дату выдачи.");
+            etIssueDate.setError(getString(R.string.correctly_data_get));
         }
 
         if (!isLicenseValid && license.length() > 0) {
-            etLicenseNumber.setError("Номер должен содержать ровно 10 цифр");
+            etLicenseNumber.setError(getString(R.string.then_correctly));
         } else {
             etLicenseNumber.setError(null);
         }

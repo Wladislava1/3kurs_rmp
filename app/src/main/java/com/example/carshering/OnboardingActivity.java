@@ -1,10 +1,13 @@
 package com.example.carshering;
 
 import com.example.carshering.utils.PrefManager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.viewpager.widget.ViewPager;
+
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +28,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         PrefManager prefManager = new PrefManager(this);
 
-        // Если уже запускалось, сразу переходим к WelcomeActivity
         if (!prefManager.isFirstTimeLaunch()) {
             startActivity(new Intent(this, WelcomeActivity.class));
             finish();
@@ -41,29 +43,32 @@ public class OnboardingActivity extends AppCompatActivity {
         binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // 1. Создаем список слайдов
         List<OnboardingItem> onboardingItems = new ArrayList<>();
-        onboardingItems.add(new OnboardingItem(R.drawable.item1, "Добро пожаловать", "Мы поможем тебе найти поездку"));
-        onboardingItems.add(new OnboardingItem(R.drawable.item2, "Удобно", "Выбирай машины поблизости"));
-        onboardingItems.add(new OnboardingItem(R.drawable.item3, "Поехали", "Начни своё путешествие прямо сейчас"));
+        onboardingItems.add(new OnboardingItem(R.drawable.item1,
+                getString(R.string.youre_welcome), getString(R.string.we_help_you)));
+        onboardingItems.add(new OnboardingItem(R.drawable.item2,
+                getString(R.string.comfortable), getString(R.string.auto_here)));
+        onboardingItems.add(new OnboardingItem(R.drawable.item3,
+                getString(R.string.go), getString(R.string.beggin_now)));
 
-        // 2. Создаем адаптер и устанавливаем его в ViewPager
         OnboardingAdapter adapter = new OnboardingAdapter(onboardingItems);
         binding.onboardingViewPager.setAdapter(adapter);
 
-        // **Добавляем индикаторы**
         setupIndicators(adapter.getCount());
 
-        // **Слушатель перелистывания ViewPager**
         binding.onboardingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(
+                    int position,
+                    float positionOffset,
+                    int positionOffsetPixels
+            ) {
+            }
 
             @Override
             public void onPageSelected(int position) {
                 setCurrentIndicator(position);
 
-                // Показать кнопку "Поехали" на последнем слайде
                 if (position == adapter.getCount() - 1) {
                     binding.btnNext.setVisibility(View.GONE);
                     binding.btnStart.setVisibility(View.VISIBLE);
@@ -74,13 +79,12 @@ public class OnboardingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
-        // 3. Кнопка "Пропустить" сразу переходит к WelcomeActivity
         binding.btnSkip.setOnClickListener(v -> goToWelcome());
 
-        // 4. Кнопка "Далее" перелистывает ViewPager
         binding.btnNext.setOnClickListener(v -> {
             int next = binding.onboardingViewPager.getCurrentItem() + 1;
             if (next < adapter.getCount()) {
@@ -88,7 +92,6 @@ public class OnboardingActivity extends AppCompatActivity {
             }
         });
 
-        // 5. Кнопка "Поехали" переходит к WelcomeActivity
         binding.btnStart.setOnClickListener(v -> goToWelcome());
     }
 
@@ -97,6 +100,7 @@ public class OnboardingActivity extends AppCompatActivity {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
     }
+
     private void setupIndicators(int count) {
         binding.indicatorLayout.removeAllViews();
 
@@ -104,7 +108,7 @@ public class OnboardingActivity extends AppCompatActivity {
             View indicator = new View(this);
 
             LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(dpToPx(48), dpToPx(8)); // макс ширина
+                    new LinearLayout.LayoutParams(dpToPx(48), dpToPx(8));
 
             params.setMargins(dpToPx(4), 0, dpToPx(4), 0);
 

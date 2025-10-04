@@ -1,29 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DriveNext"
-        android:textColor="@color/purple"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_regular"
+        android:text="@string/app_name"
+        android:textColor="@color/purple"
         android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Поможем найти твою следующую поездку"
-        android:textSize="16sp"
         android:fontFamily="@font/montserrat_regular"
-        android:textColor="@android:color/black" />
+        android:text="@string/help2"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/logoImage"
@@ -37,22 +37,22 @@
 
     <Button
         android:id="@+id/btnLoginScreen"
-        android:text="Войти"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:textColor="@color/white"
-        android:textSize="12sp"
         android:fontFamily="@font/montserrat_regular"
-        android:layout_height="wrap_content" />
+        android:text="@string/btn_login"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/btnRegisterScreen"
-        android:text="Зарегистрироваться"
         android:layout_width="match_parent"
-        android:textSize="12sp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/button_register"
         android:fontFamily="@font/montserrat_regular"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_register"/>
+        android:text="@string/btn_go_to_register"
+        android:textSize="12sp" />
 </LinearLayout>

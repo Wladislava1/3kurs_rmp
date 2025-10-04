@@ -24,7 +24,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     private Calendar cal = Calendar.getInstance();
 
     private String current = "";
-    private String ddmmyyyy = "DDMMYYYY";
+    private String ddmmyyyy = getString(R.string.ddmmyyyy);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +50,18 @@ public class RegisterStep2Activity extends AppCompatActivity {
         btnNext.setEnabled(false);
         btnNext.setAlpha(0.5f);
 
-        String email = getIntent().getStringExtra("email");
-        String password = getIntent().getStringExtra("password");
+        String email = getIntent().getStringExtra(getString(R.string.email));
+        String password = getIntent().getStringExtra(getString(R.string.password));
 
-        // Маска для ввода даты
         etBirthDate.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (!s.toString().equals(current)) {
@@ -71,23 +76,23 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     if (clean.length() < 8) {
                         clean = clean + ddmmyyyy.substring(clean.length());
                     } else {
-                        int day = Integer.parseInt(clean.substring(0,2));
-                        int mon = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
+                        int day = Integer.parseInt(clean.substring(0, 2));
+                        int mon = Integer.parseInt(clean.substring(2, 4));
+                        int year = Integer.parseInt(clean.substring(4, 8));
 
                         mon = Math.max(1, Math.min(mon, 12));
-                        cal.set(Calendar.MONTH, mon-1);
+                        cal.set(Calendar.MONTH, mon - 1);
                         year = Math.max(1900, Math.min(year, 2007));
                         cal.set(Calendar.YEAR, year);
 
                         day = Math.min(day, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-                        clean = String.format("%02d%02d%04d", day, mon, year);
+                        clean = String.format(getString(R.string.mask), day, mon, year);
                     }
 
-                    clean = String.format("%s/%s/%s",
-                            clean.substring(0,2),
-                            clean.substring(2,4),
-                            clean.substring(4,8));
+                    clean = String.format(getString(R.string.format),
+                            clean.substring(0, 2),
+                            clean.substring(2, 4),
+                            clean.substring(4, 8));
 
                     current = clean;
                     etBirthDate.setText(current);
@@ -98,7 +103,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
             }
         });
 
-        // Слушатели для текстовых полей и радио-кнопок
         etLastName.addTextChangedListener(formWatcher);
         etFirstName.addTextChangedListener(formWatcher);
         etMiddleName.addTextChangedListener(formWatcher);
@@ -111,29 +115,26 @@ public class RegisterStep2Activity extends AppCompatActivity {
             String birth = etBirthDate.getText().toString().trim();
             int genderId = rgGender.getCheckedRadioButtonId();
 
-            // Проверка заполненности
             if (last.isEmpty() || first.isEmpty() || birth.isEmpty() || genderId == -1) {
-                if (last.isEmpty()) etLastName.setError("Пожалуйста, заполните все обязательные поля.");
-                if (first.isEmpty()) etFirstName.setError("Пожалуйста, заполните все обязательные поля.");
-                if (birth.isEmpty()) etBirthDate.setError("Пожалуйста, заполните все обязательные поля.");
+                if (last.isEmpty()) etLastName.setError(getString(R.string.all_input));
+                if (first.isEmpty()) etFirstName.setError(getString(R.string.all_input));
+                if (birth.isEmpty()) etBirthDate.setError(getString(R.string.all_input));
                 return;
             }
 
-            // Проверка даты
             if (!isValidDate(birth)) {
-                etBirthDate.setError("Введите корректную дату рождения.");
+                etBirthDate.setError(getString(R.string.correct_birthDay));
                 return;
             }
 
-            // Переход к Step3
             Intent intent = new Intent(this, RegisterStep3Activity.class);
-            intent.putExtra("email", email);
-            intent.putExtra("password", password);
-            intent.putExtra("firstName", first);
-            intent.putExtra("lastName", last);
-            intent.putExtra("middleName", middle);
-            intent.putExtra("birthDate", birth);
-            intent.putExtra("genderId", genderId);
+            intent.putExtra(getString(R.string.email), email);
+            intent.putExtra(getString(R.string.password), password);
+            intent.putExtra(getString(R.string.firstname), first);
+            intent.putExtra(getString(R.string.lastname), last);
+            intent.putExtra(getString(R.string.middlename), middle);
+            intent.putExtra(getString(R.string.birthDate), birth);
+            intent.putExtra(getString(R.string.genderId), genderId);
             startActivity(intent);
         });
 
@@ -164,11 +165,12 @@ public class RegisterStep2Activity extends AppCompatActivity {
         boolean isValid = !last.isEmpty() && !first.isEmpty() && !birth.isEmpty()
                 && isValidDate(birth) && genderId != -1;
 
-        // Ошибки для пустых полей
-        if (last.isEmpty()) etLastName.setError("Пожалуйста, заполните все обязательные поля."); else etLastName.setError(null);
-        if (first.isEmpty()) etFirstName.setError("Пожалуйста, заполните все обязательные поля."); else etFirstName.setError(null);
-        if (birth.isEmpty()) etBirthDate.setError("Пожалуйста, заполните все обязательные поля.");
-        else if (!isValidDate(birth)) etBirthDate.setError("Введите корректную дату рождения.");
+        if (last.isEmpty()) etLastName.setError(getString(R.string.all_input));
+        else etLastName.setError(null);
+        if (first.isEmpty()) etFirstName.setError(getString(R.string.all_input));
+        else etFirstName.setError(null);
+        if (birth.isEmpty()) etBirthDate.setError(getString(R.string.all_input));
+        else if (!isValidDate(birth)) etBirthDate.setError(getString(R.string.all_input));
         else etBirthDate.setError(null);
 
         btnNext.setEnabled(isValid);
@@ -176,8 +178,17 @@ public class RegisterStep2Activity extends AppCompatActivity {
     }
 
     private final TextWatcher formWatcher = new TextWatcher() {
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        @Override public void afterTextChanged(Editable s) { validateForm(); }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            validateForm();
+        }
     };
 }

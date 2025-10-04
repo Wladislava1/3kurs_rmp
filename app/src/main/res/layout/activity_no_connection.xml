@@ -3,58 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Картинка -->
     <LinearLayout
         android:id="@+id/centerContent"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/circlenc"/>
+            android:src="@drawable/circlenc" />
 
         <TextView
             android:id="@+id/errorText"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/montserrat_regular"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:lineSpacingExtra="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нет подключения к интернету"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:gravity="center"
+            android:lineSpacingExtra="20dp"
+            android:text="@string/no_connection"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/errorSubText"
-            android:fontFamily="@font/montserrat_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat_regular"
             android:gravity="center"
-            android:text="Проверьте подключение и повторите попытку"
-            android:layout_marginTop="8dp"/>
+            android:text="@string/check_connection"
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <!-- Кнопка внизу -->
     <Button
         android:id="@+id/retryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Повторить попытку"
-        android:background="@drawable/button_background"
-        android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_regular"
         android:layout_margin="16dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/retry_one"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
