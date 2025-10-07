@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,10 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.MainActivity;
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
 import com.example.carshering.databinding.ActivitySplashBinding;
+import com.example.carshering.ui.onboarding.OnboardingActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

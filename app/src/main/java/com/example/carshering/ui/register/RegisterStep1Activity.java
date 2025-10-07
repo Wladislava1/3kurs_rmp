@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,14 @@ import android.view.MotionEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.R;
 import com.example.carshering.databinding.ActivityRegisterStep1Binding;
 import com.example.carshering.utils.NetworkUtils;
 
 public class RegisterStep1Activity extends AppCompatActivity {
-
     private ActivityRegisterStep1Binding binding;
+    private static final int DRAWABLE_END = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +65,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
         String password = binding.etPassword.getText().toString().trim();
         String repeatPassword = binding.etRepeatPassword.getText().toString().trim();
         boolean isChecked = binding.cbAgreement.isChecked();
-
         boolean isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches();
         boolean isPasswordValid = !password.isEmpty() && password.equals(repeatPassword);
-        boolean isAgreementValid = isChecked;
 
         if (!email.isEmpty() && !isEmailValid) {
             binding.etEmail.setError(getString(R.string.input_correct_email));
@@ -80,13 +80,13 @@ public class RegisterStep1Activity extends AppCompatActivity {
             binding.etRepeatPassword.setError(null);
         }
 
-        if (!isAgreementValid) {
+        if (!isChecked) {
             binding.cbAgreement.setError(getString(R.string.checkbox));
         } else {
             binding.cbAgreement.setError(null);
         }
 
-        boolean isValid = isEmailValid && isPasswordValid && isAgreementValid;
+        boolean isValid = isEmailValid && isPasswordValid && isChecked;
         binding.btnNextStep1.setEnabled(isValid);
         binding.btnNextStep1.setAlpha(isValid ? 1f : 0.5f);
     }
@@ -112,7 +112,6 @@ public class RegisterStep1Activity extends AppCompatActivity {
     };
 
     private boolean togglePasswordVisibility(android.widget.EditText editText, MotionEvent event) {
-        final int DRAWABLE_END = 2;
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (event.getRawX() >=
                     (editText.getRight() - editText.getCompoundDrawables()[DRAWABLE_END]

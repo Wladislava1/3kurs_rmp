@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.MainActivity;
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.R;
 import com.example.carshering.utils.NetworkUtils;
 
 public class RegisterSuccessActivity extends AppCompatActivity {
 
-    private Button btnContinue;
+    private Button btnFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +27,9 @@ public class RegisterSuccessActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_register_success);
 
-        btnContinue = findViewById(R.id.btnFinish);
+        btnFinish = findViewById(R.id.btnFinish);
 
-        btnContinue.setOnClickListener(v -> {
+        btnFinish.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

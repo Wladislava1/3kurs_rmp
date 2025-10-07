@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.R;
 import com.example.carshering.utils.NetworkUtils;
+import com.example.carshering.utils.DateUtils;
 
 import java.util.Calendar;
 
@@ -19,12 +22,15 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
     private EditText etLastName, etFirstName, etMiddleName, etBirthDate;
     private RadioGroup rgGender;
-    private Button btnNext;
-    private ImageView btnBack;
-    private Calendar cal = Calendar.getInstance();
+    private Button btnNextStep2;
+    private ImageView btnBackStep2;
 
-    private String current = "";
-    private String ddmmyyyy = getString(R.string.ddmmyyyy);
+    private final Calendar calendar = Calendar.getInstance();
+
+    private String currentBirthInput = "";
+    private String birthDateMask;
+    private static final int MIN_YEAR = 1900;
+    private static final int MAX_YEAR = 2007;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_register_step2);
+        birthDateMask = getString(R.string.ddmmyyyy);
 
         etLastName = findViewById(R.id.etSurname);
         etFirstName = findViewById(R.id.etName);
@@ -44,11 +51,11 @@ public class RegisterStep2Activity extends AppCompatActivity {
         etBirthDate = findViewById(R.id.etBirthDate);
         rgGender = findViewById(R.id.rgGender);
 
-        btnNext = findViewById(R.id.btnNextStep2);
-        btnBack = findViewById(R.id.ivBack);
+        btnBackStep2 = findViewById(R.id.ivBack);
 
-        btnNext.setEnabled(false);
-        btnNext.setAlpha(0.5f);
+        btnNextStep2 = findViewById(R.id.btnNextStep2);
+        btnNextStep2.setEnabled(false);
+        btnNextStep2.setAlpha(0.5f);
 
         String email = getIntent().getStringExtra(getString(R.string.email));
         String password = getIntent().getStringExtra(getString(R.string.password));
@@ -64,9 +71,9 @@ public class RegisterStep2Activity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!s.toString().equals(current)) {
+                if (!s.toString().equals(currentBirthInput)) {
                     String clean = s.toString().replaceAll("[^\\d]", "");
-                    String cleanC = current.replaceAll("[^\\d]", "");
+                    String cleanC = currentBirthInput.replaceAll("[^\\d]", "");
 
                     int cl = clean.length();
                     int sel = cl;
@@ -74,18 +81,18 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     if (clean.equals(cleanC)) sel--;
 
                     if (clean.length() < 8) {
-                        clean = clean + ddmmyyyy.substring(clean.length());
+                        clean = clean + birthDateMask.substring(clean.length());
                     } else {
                         int day = Integer.parseInt(clean.substring(0, 2));
                         int mon = Integer.parseInt(clean.substring(2, 4));
                         int year = Integer.parseInt(clean.substring(4, 8));
 
                         mon = Math.max(1, Math.min(mon, 12));
-                        cal.set(Calendar.MONTH, mon - 1);
-                        year = Math.max(1900, Math.min(year, 2007));
-                        cal.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, mon - 1);
+                        year = Math.max(MIN_YEAR, Math.min(year, MAX_YEAR));
+                        calendar.set(Calendar.YEAR, year);
 
-                        day = Math.min(day, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        day = Math.min(day, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
                         clean = String.format(getString(R.string.mask), day, mon, year);
                     }
 
@@ -94,9 +101,9 @@ public class RegisterStep2Activity extends AppCompatActivity {
                             clean.substring(2, 4),
                             clean.substring(4, 8));
 
-                    current = clean;
-                    etBirthDate.setText(current);
-                    etBirthDate.setSelection(Math.min(sel, current.length()));
+                    currentBirthInput = clean;
+                    etBirthDate.setText(currentBirthInput);
+                    etBirthDate.setSelection(Math.min(sel, currentBirthInput.length()));
 
                     validateForm();
                 }
@@ -108,7 +115,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         etMiddleName.addTextChangedListener(formWatcher);
         rgGender.setOnCheckedChangeListener((group, checkedId) -> validateForm());
 
-        btnNext.setOnClickListener(v -> {
+        btnNextStep2.setOnClickListener(v -> {
             String last = etLastName.getText().toString().trim();
             String first = etFirstName.getText().toString().trim();
             String middle = etMiddleName.getText().toString().trim();
@@ -122,7 +129,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
                 return;
             }
 
-            if (!isValidDate(birth)) {
+            if (!DateUtils.isValidDate(birth)) {
                 etBirthDate.setError(getString(R.string.correct_birthDay));
                 return;
             }
@@ -138,54 +145,41 @@ public class RegisterStep2Activity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBackStep2.setOnClickListener(v -> finish());
     }
-
-    private boolean isValidDate(String date) {
-        if (date == null || !date.matches("\\d{2}/\\d{2}/\\d{4}")) return false;
-        String[] parts = date.split("/");
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
-
-        if (month < 1 || month > 12) return false;
-        cal.set(Calendar.MONTH, month - 1);
-        cal.set(Calendar.YEAR, year);
-
-        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        return day >= 1 && day <= maxDay;
+    private void setErrorIfEmpty(EditText editText, String text) {
+        if (text.isEmpty()) {
+            editText.setError(getString(R.string.all_input));
+        } else {
+            editText.setError(null);
+        }
     }
 
     private void validateForm() {
-        String last = etLastName.getText().toString().trim();
-        String first = etFirstName.getText().toString().trim();
-        String birth = etBirthDate.getText().toString().trim();
+        String lastName = etLastName.getText().toString().trim();
+        String firstName = etFirstName.getText().toString().trim();
+        String birthDate = etBirthDate.getText().toString().trim();
         int genderId = rgGender.getCheckedRadioButtonId();
 
-        boolean isValid = !last.isEmpty() && !first.isEmpty() && !birth.isEmpty()
-                && isValidDate(birth) && genderId != -1;
+        boolean isValid = !lastName.isEmpty() && !firstName.isEmpty()
+                && !birthDate.isEmpty() && DateUtils.isValidDate(birthDate)
+                && genderId != -1;
 
-        if (last.isEmpty()) etLastName.setError(getString(R.string.all_input));
-        else etLastName.setError(null);
-        if (first.isEmpty()) etFirstName.setError(getString(R.string.all_input));
-        else etFirstName.setError(null);
-        if (birth.isEmpty()) etBirthDate.setError(getString(R.string.all_input));
-        else if (!isValidDate(birth)) etBirthDate.setError(getString(R.string.all_input));
-        else etBirthDate.setError(null);
+        setErrorIfEmpty(etLastName, lastName);
+        setErrorIfEmpty(etFirstName, firstName);
+        setErrorIfEmpty(etBirthDate, birthDate);
 
-        btnNext.setEnabled(isValid);
-        btnNext.setAlpha(isValid ? 1f : 0.5f);
+        btnNextStep2.setEnabled(isValid);
+        btnNextStep2.setAlpha(isValid ? 1f : 0.5f);
     }
 
     private final TextWatcher formWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
         }
-
         @Override
         public void afterTextChanged(Editable s) {
             validateForm();

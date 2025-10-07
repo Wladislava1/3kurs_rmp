@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.register;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.view.View;
 
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.utils.DateUtils;
+import com.example.carshering.R;
 import com.example.carshering.model.User;
 import com.example.carshering.api.ApiClient;
 import com.example.carshering.utils.NetworkUtils;
@@ -37,7 +40,6 @@ public class RegisterStep3Activity extends AppCompatActivity {
     private Button btnNext;
     private Calendar cal = Calendar.getInstance();
     private String currentDate = "";
-    private final String ddmmyyyy = getString(R.string.ddmmyyyy);
     private Drawable licensePlaceholder, passportPlaceholder;
 
     private boolean isLicensePhotoUploaded = false;
@@ -53,6 +55,8 @@ public class RegisterStep3Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final String ddmmyyyy = getString(R.string.ddmmyyyy);
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             startActivity(new Intent(this, NoConnectionActivity.class));
@@ -196,7 +200,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
                 return;
             }
 
-            if (license.isEmpty() || !isValidDate(issueDate)) {
+            if (license.isEmpty() || !DateUtils.isValidDate(issueDate)) {
                 Toast.makeText(this, getString(R.string.all_input),
                         Toast.LENGTH_SHORT).show();
                 return;
@@ -304,22 +308,6 @@ public class RegisterStep3Activity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
         }
     };
-
-    private boolean isValidDate(String date) {
-        if (date == null || !date.matches("\\d{2}/\\d{2}/\\d{4}")) return false;
-        String[] parts = date.split("/");
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
-
-        if (month < 1 || month > 12) return false;
-        cal.set(Calendar.MONTH, month - 1);
-        cal.set(Calendar.YEAR, year);
-
-        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        return day >= 1 && day <= maxDay;
-    }
-
     private void validateForm() {
         String license = etLicenseNumber.getText().toString().trim();
         String date = etIssueDate.getText().toString().trim();
@@ -330,7 +318,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         boolean isLicenseFilled = !license.isEmpty();
         boolean isDateFilled = !date.isEmpty();
         boolean isLicenseValid = license.matches("\\d{10}");
-        boolean isDateValid = isValidDate(date);
+        boolean isDateValid = DateUtils.isValidDate(date);
 
         boolean isLicensePhotoUploaded = btnUploadLicense.getDrawable() != licensePlaceholder;
         boolean isPassportPhotoUploaded = btnUploadPassport.getDrawable() != passportPlaceholder;
@@ -353,7 +341,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         } else {
             tvPassportError.setVisibility(View.GONE);
         }
-        // Сообщения об ошибках
+
         if (!isLicenseFilled || !isDateFilled) {
             if (!isLicenseFilled) etLicenseNumber.setError(getString(R.string.all_input));
             if (!isDateFilled) etIssueDate.setError(getString(R.string.all_input));

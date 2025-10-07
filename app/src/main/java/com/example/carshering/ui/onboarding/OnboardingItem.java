@@ -1,9 +1,9 @@
-package com.example.carshering;
+package com.example.carshering.ui.onboarding;
 
 public class OnboardingItem {
-    private int imageResId;
-    private String title;
-    private String description;
+    private final int imageResId;
+    private final String title;
+    private final String description;
 
     public OnboardingItem(int imageResId, String title, String description) {
         this.imageResId = imageResId;

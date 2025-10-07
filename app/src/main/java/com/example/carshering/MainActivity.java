@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
 import com.example.carshering.utils.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {

@@ -15,9 +15,8 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,21 +24,19 @@
         </activity>
 
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".NoConnectionActivity"
-            android:exported="false"/>
-
-        <!-- Онбординг -->
-        <activity
-            android:name=".OnboardingActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="false" />
 
-        <!-- Логин -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.no_connection.NoConnectionActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.login.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 
@@ -47,24 +44,20 @@
             android:name=".MainActivity"
             android:exported="false" />
 
-        <!-- Регистрация шаг 1 -->
         <activity
-            android:name=".RegisterStep1Activity"
+            android:name=".ui.register.RegisterStep1Activity"
             android:exported="false" />
 
-        <!-- Регистрация шаг 2 -->
         <activity
-            android:name=".RegisterStep2Activity"
+            android:name=".ui.register.RegisterStep2Activity"
             android:exported="false" />
 
-        <!-- Регистрация шаг 3 -->
         <activity
-            android:name=".RegisterStep3Activity"
+            android:name=".ui.register.RegisterStep3Activity"
             android:exported="false" />
 
-        <!-- Регистрация завершена -->
         <activity
-            android:name=".RegisterSuccessActivity"
+            android:name=".ui.register.RegisterSuccessActivity"
             android:exported="false" />
 
     </application>

@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.MainActivity;
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.R;
 import com.example.carshering.databinding.ActivityLoginBinding;
 import com.example.carshering.model.User;
 import com.example.carshering.api.ApiClient;
+import com.example.carshering.ui.register.RegisterStep1Activity;
 import com.example.carshering.utils.NetworkUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth auth;
+    private static final int RC_SIGN_IN = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnGoogleLogin.setOnClickListener(v -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, 100);
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         });
 
         binding.btnGoToRegister.setOnClickListener(v ->
@@ -120,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100) {
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);

@@ -1,10 +1,13 @@
-package com.example.carshering;
+package com.example.carshering.ui.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.ui.login.LoginActivity;
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.ui.register.RegisterStep1Activity;
 import com.example.carshering.utils.NetworkUtils;
 
 import com.example.carshering.databinding.ActivityWelcomeBinding;

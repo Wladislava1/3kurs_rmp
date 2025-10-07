@@ -1,5 +1,8 @@
-package com.example.carshering;
+package com.example.carshering.ui.onboarding;
 
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.R;
+import com.example.carshering.ui.welcome.WelcomeActivity;
 import com.example.carshering.utils.PrefManager;
 
 import android.content.Intent;
@@ -19,8 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
-
     private ActivityOnboardingBinding binding;
+    private static final int INDICATOR_ACTIVE_WIDTH_DP = 48;
+    private static final int INDICATOR_INACTIVE_WIDTH_DP = 24;
+    private static final int INDICATOR_HEIGHT_DP = 8;
+    private static final int INDICATOR_MARGIN_DP = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         PrefManager prefManager = new PrefManager(this);
 
+        // Если первый запуск уже был, сразу переходим на WelcomeActivity
         if (!prefManager.isFirstTimeLaunch()) {
             startActivity(new Intent(this, WelcomeActivity.class));
             finish();
@@ -108,15 +115,18 @@ public class OnboardingActivity extends AppCompatActivity {
             View indicator = new View(this);
 
             LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(dpToPx(48), dpToPx(8));
+                    new LinearLayout.LayoutParams(dpToPx(INDICATOR_ACTIVE_WIDTH_DP),
+                            dpToPx(INDICATOR_HEIGHT_DP)
+                    );
 
-            params.setMargins(dpToPx(4), 0, dpToPx(4), 0);
+            params.setMargins(dpToPx(INDICATOR_MARGIN_DP), 0,
+                    dpToPx(INDICATOR_MARGIN_DP), 0);
 
             if (i == 0) {
-                params.width = dpToPx(48); // активный
+                params.width = dpToPx(INDICATOR_ACTIVE_WIDTH_DP); // активный
                 indicator.setBackgroundResource(R.drawable.indicator_active);
             } else {
-                params.width = dpToPx(24); // неактивный
+                params.width = dpToPx(INDICATOR_INACTIVE_WIDTH_DP); // неактивный
                 indicator.setBackgroundResource(R.drawable.indicator_inactive);
             }
 
@@ -132,10 +142,10 @@ public class OnboardingActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) child.getLayoutParams();
 
             if (i == index) {
-                params.width = dpToPx(48);
+                params.width = dpToPx(INDICATOR_ACTIVE_WIDTH_DP);
                 child.setBackgroundResource(R.drawable.indicator_active);
             } else {
-                params.width = dpToPx(24);
+                params.width = dpToPx(INDICATOR_INACTIVE_WIDTH_DP);
                 child.setBackgroundResource(R.drawable.indicator_inactive);
             }
 

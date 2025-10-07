@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.no_connection;
 
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.R;
 import com.example.carshering.databinding.ActivityNoConnectionBinding;
+import com.example.carshering.ui.login.LoginActivity;
 
 public class NoConnectionActivity extends AppCompatActivity {
 

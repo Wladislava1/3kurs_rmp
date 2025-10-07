@@ -1,4 +1,4 @@
-package com.example.carshering;
+package com.example.carshering.ui.onboarding;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.carshering.R;
+
 import java.util.List;
 
 public class OnboardingAdapter extends PagerAdapter {
-
-    private List<OnboardingItem> items;
-
+    private final List<OnboardingItem> items;
     public OnboardingAdapter(List<OnboardingItem> items) {
         this.items = items;
     }
@@ -23,12 +23,10 @@ public class OnboardingAdapter extends PagerAdapter {
     public int getCount() {
         return items.size();
     }
-
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+        return view == object; // Проверка, что view соответствует объекту
     }
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -47,7 +45,6 @@ public class OnboardingAdapter extends PagerAdapter {
         container.addView(view);
         return view;
     }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
