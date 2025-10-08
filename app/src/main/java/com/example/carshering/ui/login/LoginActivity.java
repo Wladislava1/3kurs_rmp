@@ -55,11 +55,12 @@ public class LoginActivity extends AppCompatActivity {
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                // ID-токен FireBase в .json
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
+        googleSignInClient = GoogleSignIn.getClient(this, gso); // экран Google-аккаунт
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -94,7 +95,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Toast.makeText(LoginActivity.this,
                                 R.string.login_success, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(
+                                LoginActivity.this,
+                                MainActivity.class
+                        ));
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this,
@@ -112,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnGoogleLogin.setOnClickListener(v -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
+            // отличать этот результат в onActivityResult
             startActivityForResult(signInIntent, RC_SIGN_IN);
         });
 
@@ -120,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         RegisterStep1Activity.class))
         );
     }
-
+    // перехватывает ответ от Google
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -143,11 +148,17 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithCredential(credential).addOnCompleteListener(this,
                 task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,
+                                R.string.login_success,
+                                Toast.LENGTH_SHORT
+                        ).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(this, R.string.google_auth_error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,
+                                R.string.google_auth_error,
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }

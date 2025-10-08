@@ -8,6 +8,7 @@
     <string name="network_error">Ошибка сети</string>
     <string name="google_signin_error">Ошибка Google Sign-In</string>
     <string name="google_auth_error">Ошибка авторизации</string>
+    <string name="firebase_error">Ошибка FireBase</string>
     <string name="error_internet">Ошибка сети: </string>
     <string name="btn_login">Войти</string>
     <string name="btn_google_login">Войти через Google</string>

@@ -76,7 +76,7 @@ public class OnboardingActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 setCurrentIndicator(position);
 
-                if (position == adapter.getCount() - 1) {
+                if (position == adapter.getCount() - 1) { // страница поехали последняя
                     binding.btnNext.setVisibility(View.GONE);
                     binding.btnStart.setVisibility(View.VISIBLE);
                 } else {

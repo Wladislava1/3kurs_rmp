@@ -10,11 +10,23 @@ public class User {
     private String gender;
     private String driverLicenseNumber;
     private String driverLicenseIssueDate;
+    private String authProvider;
+
+    public User() {}
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.authProvider = "local";
     }
+
+    public User(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authProvider = "google";
+    }
+
 
     public String getEmail() {
         return email;
