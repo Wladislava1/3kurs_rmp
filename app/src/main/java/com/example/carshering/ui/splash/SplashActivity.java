@@ -12,6 +12,7 @@ import com.example.carshering.ui.no_connection.NoConnectionActivity;
 import com.example.carshering.databinding.ActivitySplashBinding;
 import com.example.carshering.ui.onboarding.OnboardingActivity;
 import com.example.carshering.utils.NetworkUtils;
+import com.example.carshering.utils.PrefManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -25,7 +26,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         new Handler().postDelayed(() -> {
-            boolean firstLaunch = true; // впервые открыл
+            PrefManager prefManager = new PrefManager(this);
+            boolean firstLaunch = prefManager.isFirstTimeLaunch(); // впервые открыл
             boolean hasToken = false;
 
             if (!NetworkUtils.isNetworkAvailable(this)) {
