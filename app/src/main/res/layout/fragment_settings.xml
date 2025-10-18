@@ -1,0 +1,264 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"
+        android:paddingBottom="24dp"
+        android:text="Настройки"
+        android:textColor="@color/purple"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp">
+
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/avatar_background"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile_placeholder" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Имя пользователя"
+                android:textColor="@color/purple"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="vlada@example.com"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivProfileArrow"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+    <!-- Настройки -->
+    <LinearLayout
+        android:id="@+id/llSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_regular"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_taxi" />
+
+            <TextView
+                android:id="@+id/tvMyReservation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Мои бронирования"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_sun" />
+
+            <TextView
+                android:id="@+id/tvTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Тема"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_notifications" />
+
+            <TextView
+                android:id="@+id/tvNotifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Уведомления"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_banknotes" />
+
+            <TextView
+                android:id="@+id/tvConnectMyCar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Подключить свой автомобиль"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#EDEDED" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_what" />
+
+            <TextView
+                android:id="@+id/tvHelp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Помощь"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_paper" />
+
+            <TextView
+                android:id="@+id/tvInviteFriend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Пригласи друга"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

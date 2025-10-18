@@ -3,9 +3,15 @@ package com.example.carshering.api;
 import com.example.carshering.model.User;
 
 import okhttp3.ResponseBody;
+import com.example.carshering.model.Car;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -14,4 +20,10 @@ public interface ApiService {
 
     @POST("api/register")
     Call<ResponseBody> register(@Body User user);
+
+    @GET("api/cars")
+    Call<List<Car>> getCars();
+
+    @GET("cars/search")
+    Call<List<Car>> searchCars(@Query("query") String query);
 }

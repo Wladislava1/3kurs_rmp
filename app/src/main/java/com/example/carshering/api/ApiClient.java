@@ -9,10 +9,9 @@ public class ApiClient {
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofit() {
-        if (retrofit == null) { // чтобы не создавать каждый раз заново
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    // JSON-ответ сервера → Java-класс
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

@@ -110,5 +110,14 @@
     </string>
     <string name="help2">Поможем найти твою следующую поездку</string>
 
+    <string name="user_avatar">Ваш аватар</string>
+    <string name="logout">Выйти из профиля</string>
+    <string name="error_loading">Не удалось загрузить данные. Попробуйте снова.</string>
+    <string name="retry">Повторить</string>
+
+    <string name="home">Главная</string>
+    <string name="settings">Настройки</string>
+    <string name="reservation">Бронирования</string>
+
 
 </resources>
