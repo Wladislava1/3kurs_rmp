@@ -24,12 +24,15 @@
                 android:text="Бренд"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="2dp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tvMark"
                 android:text="Марка"
+                android:layout_marginBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -37,7 +40,9 @@
                 android:id="@+id/tvPrice"
                 android:text="₽ 500 / час"
                 android:textStyle="bold"
-                android:layout_marginTop="4dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -46,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_horizontal">
 
                 <ImageView

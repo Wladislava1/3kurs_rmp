@@ -24,6 +24,9 @@ public interface ApiService {
     @GET("api/cars")
     Call<List<Car>> getCars();
 
-    @GET("cars/search")
+    @GET("api/cars/search")
     Call<List<Car>> searchCars(@Query("query") String query);
+
+    @GET("api/user")
+    Call<User> getUser(@Query("email") String email);
 }

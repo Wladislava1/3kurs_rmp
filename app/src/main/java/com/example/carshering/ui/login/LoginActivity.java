@@ -93,6 +93,12 @@ public class LoginActivity extends AppCompatActivity {
                                        Response<ResponseBody> response
                 ) {
                     if (response.isSuccessful()) {
+
+                        getSharedPreferences("app_prefs", MODE_PRIVATE)
+                                .edit()
+                                .putString("user_email", email)
+                                .apply();
+
                         Toast.makeText(LoginActivity.this,
                                 R.string.login_success, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(
@@ -116,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnGoogleLogin.setOnClickListener(v -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
-            // отличать этот результат в onActivityResult
             startActivityForResult(signInIntent, RC_SIGN_IN);
         });
 
@@ -125,13 +130,11 @@ public class LoginActivity extends AppCompatActivity {
                         RegisterStep1Activity.class))
         );
     }
-    // перехватывает ответ от Google
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-            // данные акк
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -142,13 +145,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
-    // Авторизация через Firebase
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential).addOnCompleteListener(this,
                 task -> {
                     if (task.isSuccessful()) {
+                        String email = auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : null;
+                        if (email != null) {
+                            getSharedPreferences("app_prefs", MODE_PRIVATE)
+                                    .edit()
+                                    .putString("user_email", email)
+                                    .apply();
+                        }
                         Toast.makeText(this,
                                 R.string.login_success,
                                 Toast.LENGTH_SHORT

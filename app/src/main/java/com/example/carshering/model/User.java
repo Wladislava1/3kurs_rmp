@@ -10,6 +10,7 @@ public class User {
     private String gender;
     private String driverLicenseNumber;
     private String driverLicenseIssueDate;
+    private String registrationDate;
     private String authProvider;
 
     public User() {}
@@ -98,5 +99,13 @@ public class User {
 
     public void setDriverLicenseIssueDate(String driverLicenseIssueDate) {
         this.driverLicenseIssueDate = driverLicenseIssueDate;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

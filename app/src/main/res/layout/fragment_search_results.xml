@@ -5,32 +5,66 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Индикатор загрузки -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- 🔙 Кнопка "Назад" -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Назад" />
+
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Результаты поиска"
+            android:textColor="@color/purple"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginTop="8dp" />
 
-    <!-- Сообщение об ошибке -->
     <LinearLayout
         android:id="@+id/errorLayout"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/tvErrorMessage"
             android:text="@string/error_loading"
             android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/retry" />
     </LinearLayout>
 
@@ -41,3 +75,4 @@
         android:layout_height="match_parent" />
 
 </LinearLayout>
+

@@ -1,21 +1,28 @@
 package com.example.carshering.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.carshering.R;
 import com.example.carshering.api.ApiClient;
 import com.example.carshering.api.ApiService;
 import com.example.carshering.databinding.FragmentHomeBinding;
 import com.example.carshering.model.Car;
+import com.example.carshering.ui.no_connection.NoConnectionActivity;
+import com.example.carshering.utils.NetworkUtils;
 
 import java.util.List;
 
@@ -56,7 +63,31 @@ public class HomeFragment extends Fragment {
         binding.recyclerView.setAdapter(carAdapter);
         loadCars();
 
+        EditText searchField = binding.searchField;
+        ImageButton searchButton = binding.searchButton;
+
+        searchButton.setOnClickListener(v -> {
+            String query = searchField.getText().toString().trim();
+            if (TextUtils.isEmpty(query)) {
+                Toast.makeText(requireContext(), "Введите марку автомобиля", Toast.LENGTH_SHORT).show();
+            } else {
+                if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+                    startActivity(new Intent(requireContext(), NoConnectionActivity.class));
+                    requireActivity().finish();
+                } else {
+                    startSearch(query);
+                }
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    private void startSearch(String query) {
+        LoadingFragment loadingFragment = LoadingFragment.newInstance(query, true);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, loadingFragment)
+                .commit();
     }
 
     private void loadCars() {
@@ -66,24 +97,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<Car>> call, @NonNull Response<List<Car>> response) {
                 binding.progressBar.setVisibility(View.GONE);
-                Log.d("API", "Response code: " + response.code());
-                Log.d("API", "Body: " + response.body());
                 if (response.isSuccessful() && response.body() != null) {
                     carAdapter.setCars(response.body());
                 } else {
-                    showError("Не удалось загрузить данные. Попробуйте снова.");
+                    Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Car>> call, @NonNull Throwable t) {
                 binding.progressBar.setVisibility(View.GONE);
-                showError("Ошибка загрузки данных. Проверьте подключение к интернету.");
+                Toast.makeText(requireContext(), "Ошибка сети", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showError(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

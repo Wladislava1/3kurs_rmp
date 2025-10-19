@@ -1,41 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <!-- Аватар -->
-    <ImageView
-        android:id="@+id/ivAvatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_profile_placeholder"
-        android:scaleType="centerCrop"
-        android:clipToOutline="true"
-        android:background="@drawable/avatar_background"
-        android:contentDescription="@string/user_avatar"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="32dp" />
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp">
 
-    <!-- Имя пользователя (пример, можно убрать или привязать к данным) -->
+        <ImageView
+            android:id="@+id/ivProfilePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/photo_profil"
+            android:scaleType="centerCrop"
+            android:src="@drawable/photo" />
+
+        <ImageView
+            android:id="@+id/ivAddPhotoIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="@string/add_photo"
+            android:padding="4dp"
+            android:src="@drawable/vector" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/tvUserName"
-        android:text="Имя пользователя"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="48dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Имя пользователя"
+        android:textColor="@color/purple"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <!-- Кнопка выхода -->
-    <Button
-        android:id="@+id/btnLogout"
+    <TextView
+        android:id="@+id/tvLogRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="Присоединился в июле 2024"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/llSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:backgroundTint="@color/purple"
-        android:textColor="@android:color/white" />
+        android:fontFamily="@font/montserrat_regular"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/btn_email"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/btn_email"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="#D0D5DD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/btn_password"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvUserPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Поменять пароль"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="#D0D5DD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/ru_genderId"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvUserGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/ru_genderId"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="#D0D5DD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Google"
+                android:textColor="@color/purple"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvUserGoogleGmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Google"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="#D0D5DD" />
+
+        <TextView
+            android:id="@+id/tvLoginOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Выйти из профиля"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 </LinearLayout>
