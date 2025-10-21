@@ -12,6 +12,7 @@ public class User {
     private String driverLicenseIssueDate;
     private String registrationDate;
     private String authProvider;
+    private String profilePhotoUrl;
 
     public User() {}
 
@@ -108,4 +109,7 @@ public class User {
     public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
     }
+
+    public String getProfilePhotoUrl() { return profilePhotoUrl; }
+    public void setProfilePhotoUrl(String profilePhotoUrl) { this.profilePhotoUrl = profilePhotoUrl; }
 }

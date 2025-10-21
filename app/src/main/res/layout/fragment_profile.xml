@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/photo_profil"
             android:scaleType="centerCrop"
-            android:src="@drawable/photo" />
+            android:background="@drawable/photo" />
 
         <ImageView
             android:id="@+id/ivAddPhotoIcon"
@@ -198,8 +198,8 @@
             android:id="@+id/tvLoginOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:fontFamily="@font/montserrat_regular"
             android:text="Выйти из профиля"
