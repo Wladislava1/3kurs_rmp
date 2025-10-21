@@ -81,6 +81,10 @@ public class SearchResultsFragment extends Fragment {
                     public void onDetailsClick(Car car) {
                         // TODO: переход на экран деталей
                     }
+                    @Override
+                    public void onRetryClick() {
+                        loadCars(query);
+                    }
                 }));
                 ((CarAdapter) recyclerCars.getAdapter()).setCars(carList);
             }
@@ -131,6 +135,10 @@ public class SearchResultsFragment extends Fragment {
                                 @Override
                                 public void onDetailsClick(Car car) {
                                     // TODO: переход на экран деталей
+                                }
+                                @Override
+                                public void onRetryClick() {
+                                    loadCars(query);
                                 }
                             }));
                         }

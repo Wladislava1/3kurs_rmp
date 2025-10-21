@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.carshering.R;
@@ -35,6 +35,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private CarAdapter carAdapter;
     private ApiService apiService;
+    private View errorLayout;
+    private Button btnRetry;
 
     @Nullable
     @Override
@@ -46,6 +48,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         apiService = ApiClient.getApiService();
+        errorLayout = binding.getRoot().findViewById(R.id.errorLayout);
+        btnRetry = binding.getRoot().findViewById(R.id.btnRetry);
+
+        btnRetry.setOnClickListener(v -> {
+            errorLayout.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.VISIBLE);
+            loadCars();
+        });
 
         carAdapter = new CarAdapter(new CarAdapter.OnCarActionListener() {
             @Override
@@ -56,6 +66,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDetailsClick(Car car) {
                 // TODO: переход на экран деталей
+            }
+
+            @Override
+            public void onRetryClick() {
+                loadCars();
             }
         });
 
@@ -91,6 +106,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadCars() {
+        errorLayout.setVisibility(View.GONE);
+        binding.recyclerView.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
 
         apiService.getCars().enqueue(new Callback<List<Car>>() {
@@ -99,15 +116,16 @@ public class HomeFragment extends Fragment {
                 binding.progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     carAdapter.setCars(response.body());
+                    binding.recyclerView.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show();
+                    errorLayout.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Car>> call, @NonNull Throwable t) {
                 binding.progressBar.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "Ошибка сети", Toast.LENGTH_SHORT).show();
+                errorLayout.setVisibility(View.VISIBLE);
             }
         });
     }

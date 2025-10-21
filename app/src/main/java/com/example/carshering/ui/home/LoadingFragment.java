@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ public class LoadingFragment extends Fragment {
     private int step = 0;
     private String query;
     private boolean fromHome = false;
+    private View errorLayout;
+    private Button btnRetry;
 
     public static LoadingFragment newInstance(String query, boolean fromHome) {
         LoadingFragment fragment = new LoadingFragment();
@@ -60,6 +63,8 @@ public class LoadingFragment extends Fragment {
         dot1 = view.findViewById(R.id.dot1);
         dot2 = view.findViewById(R.id.dot2);
         dot3 = view.findViewById(R.id.dot3);
+        errorLayout = view.findViewById(R.id.errorLayout);
+        btnRetry = view.findViewById(R.id.btnRetry);
 
         if (fromHome) {
             startDotsAnimation();
@@ -67,6 +72,15 @@ public class LoadingFragment extends Fragment {
         } else {
             ((MainActivity) requireActivity()).goToHome();
         }
+
+        btnRetry.setOnClickListener(v -> {
+            errorLayout.setVisibility(View.GONE);
+            dot1.setVisibility(View.VISIBLE);
+            dot2.setVisibility(View.VISIBLE);
+            dot3.setVisibility(View.VISIBLE);
+            startDotsAnimation();
+            startSearchRequest();
+        });
 
         return view;
     }
@@ -85,40 +99,41 @@ public class LoadingFragment extends Fragment {
     }
 
     private void startSearchRequest() {
+        errorLayout.setVisibility(View.GONE);
+        dot1.setVisibility(View.VISIBLE);
+        dot2.setVisibility(View.VISIBLE);
+        dot3.setVisibility(View.VISIBLE);
 
         long startTime = System.currentTimeMillis();
-
         ApiService apiService = ApiClient.getApiService();
         apiService.searchCars(query).enqueue(new Callback<List<Car>>() {
             @Override
             public void onResponse(@NonNull Call<List<Car>> call, @NonNull Response<List<Car>> response) {
-                long elapsed = System.currentTimeMillis() - startTime;
-                long delay = Math.max(0, 1500 - elapsed);
+                handler.removeCallbacksAndMessages(null);
 
-                handler.postDelayed(() -> {
-                    handler.removeCallbacksAndMessages(null);
-
-                    if (response.isSuccessful() && response.body() != null) {
-                        SearchResultsFragment resultsFragment = SearchResultsFragment.newInstance(query, response.body());
-                        getParentFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, resultsFragment)
-                                .commit();
-                    } else {
-                        Toast.makeText(requireContext(), "Ошибка загрузки данных", Toast.LENGTH_SHORT).show();
-                        ((MainActivity) requireActivity()).goToHome();
-                    }
-                }, delay);
+                if (response.isSuccessful() && response.body() != null) {
+                    SearchResultsFragment resultsFragment = SearchResultsFragment.newInstance(query, response.body());
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, resultsFragment)
+                            .commit();
+                } else {
+                    showError();
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Car>> call, @NonNull Throwable t) {
                 handler.removeCallbacksAndMessages(null);
-                Toast.makeText(requireContext(), "Ошибка сети: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                ((MainActivity) requireActivity()).goToHome();
+                showError();
             }
         });
     }
-
+    private void showError() {
+        dot1.setVisibility(View.GONE);
+        dot2.setVisibility(View.GONE);
+        dot3.setVisibility(View.GONE);
+        errorLayout.setVisibility(View.VISIBLE);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
