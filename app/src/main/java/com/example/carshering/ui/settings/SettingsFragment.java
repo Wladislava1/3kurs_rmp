@@ -81,8 +81,6 @@ public class SettingsFragment extends Fragment {
                         Picasso.get()
                                 .load(imageUrl)
                                 .transform(new CircleTransform())
-                                .placeholder(R.drawable.ic_profile_placeholder)
-                                .error(R.drawable.ic_profile_placeholder)
                                 .into(binding.ivAvatar, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {

@@ -30,6 +30,10 @@ import com.example.carshering.utils.CircleTransform;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,6 +51,10 @@ public class ProfileFragment extends Fragment {
     private Uri selectedImageUri;
     private ApiService apiService;
     private String userEmail;
+    private static final String[] RUSSIAN_MONTHS_DATIVE = {
+            "январе", "феврале", "марте", "апреле", "мае", "июне",
+            "июле", "августе", "сентябре", "октябре", "ноябре", "декабре"
+    };
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher =
             registerForActivityResult(
@@ -105,14 +113,30 @@ public class ProfileFragment extends Fragment {
                     String fullName = ((user.getFirstName() != null ? user.getFirstName() : "") + " " +
                             (user.getLastName() != null ? user.getLastName() : "")).trim();
 
-                    binding.tvLogRegister.setText(
-                            user.getRegistrationDate() != null ? "Присоединился " + user.getRegistrationDate().substring(0, 10) : "Дата не указана"
-                    );
+                    String registrationText = "Дата не указана";
+                    if (user.getRegistrationDate() != null) {
+                        try {
+                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            Date date = inputFormat.parse(user.getRegistrationDate().substring(0, 10));
+                            SimpleDateFormat monthFormat = new SimpleDateFormat("M", Locale.getDefault());
+                            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+                            int monthIndex = Integer.parseInt(monthFormat.format(date)) - 1;
+                            String monthName = RUSSIAN_MONTHS_DATIVE[monthIndex];
+                            String year = yearFormat.format(date);
+                            String genderPrefix = "Male".equalsIgnoreCase(user.getGender()) ? "Присоединился" : "Присоединилась";
+                            registrationText = String.format("%s в %s %s года", genderPrefix, monthName, year);
+                        } catch (ParseException e) {
+                            Log.e("ProfileFragment", "Ошибка парсинга даты: " + e.getMessage());
+                        }
+                    }
+                    binding.tvLogRegister.setText(registrationText);
                     binding.tvUserName.setText(!fullName.isEmpty() ? fullName : "Имя пользователя");
                     binding.tvUserEmail.setText(user.getEmail() != null ? user.getEmail() : "Email");
 
-                    binding.ivProfilePhoto.setImageDrawable(null);
+                    String genderText = "Male".equalsIgnoreCase(user.getGender()) ? "Мужской" : "Женский";
+                    binding.tvUserGender.setText(genderText);
 
+                    binding.ivProfilePhoto.setImageDrawable(null);
                     if (user.getProfilePhotoUrl() != null && !user.getProfilePhotoUrl().isEmpty()) {
                         String imageUrl = "http://10.0.2.2:8080" + user.getProfilePhotoUrl();
                         Log.d("ProfileFragment", "Попытка загрузки изображения: " + imageUrl);
@@ -122,16 +146,18 @@ public class ProfileFragment extends Fragment {
                                 .into(binding.ivProfilePhoto, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
-                                        Toast.makeText(requireContext(), "Изображение загружено", Toast.LENGTH_SHORT).show();
+                                        Log.d("ProfileFragment", "Изображение успешно загружено");
                                     }
+
                                     @Override
                                     public void onError(Exception e) {
+                                        Log.e("ProfileFragment", "Ошибка загрузки изображения: " + e.getMessage());
                                         Toast.makeText(requireContext(), "Ошибка загрузки изображения: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Ошибка загрузки данных пользователя: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
