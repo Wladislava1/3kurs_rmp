@@ -129,8 +129,6 @@ public class ProfileFragment extends Fragment {
                                         Toast.makeText(requireContext(), "Ошибка загрузки изображения: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
-                    } else {
-                        binding.ivProfilePhoto.setImageResource(R.drawable.ic_profile_placeholder);
                     }
                 } else {
                     Toast.makeText(requireContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show();
