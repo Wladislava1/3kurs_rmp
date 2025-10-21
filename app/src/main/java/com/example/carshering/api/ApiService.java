@@ -35,5 +35,6 @@ public interface ApiService {
 
     @Multipart
     @POST("api/user/photo")
-    Call<ResponseBody> uploadProfilePhoto(@Query("email") String email, @Part MultipartBody.Part file);
+    Call<ResponseBody> uploadProfilePhoto(@Query("email") String email,
+                                          @Part MultipartBody.Part file);
 }

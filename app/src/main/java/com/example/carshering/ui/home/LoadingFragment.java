@@ -46,8 +46,8 @@ public class LoadingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            query = getArguments().getString("query", "");
-            fromHome = getArguments().getBoolean("fromHome", false);
+            query = getArguments().getString(getString(R.string.query), "");
+            fromHome = getArguments().getBoolean(getString(R.string.fromHome), false);
         }
     }
 
@@ -108,11 +108,13 @@ public class LoadingFragment extends Fragment {
         ApiService apiService = ApiClient.getApiService();
         apiService.searchCars(query).enqueue(new Callback<List<Car>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Car>> call, @NonNull Response<List<Car>> response) {
+            public void onResponse(@NonNull Call<List<Car>> call,
+                                   @NonNull Response<List<Car>> response) {
                 handler.removeCallbacksAndMessages(null);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    SearchResultsFragment resultsFragment = SearchResultsFragment.newInstance(query, response.body());
+                    SearchResultsFragment resultsFragment =
+                            SearchResultsFragment.newInstance(query, response.body());
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, resultsFragment)
                             .commit();

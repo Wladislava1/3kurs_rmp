@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="Бренд"
+                    android:text="@string/brend"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -40,14 +40,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="Марка" />
+                    android:text="@string/marka" />
 
                 <TextView
                     android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="₽ 500 / час"
+                    android:text="@string/price"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:gravity="center"
-                        android:text="Автомат"
+                        android:text="@string/at"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:gravity="center"
-                        android:text="Бензин"
+                        android:text="@string/fuel"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -119,7 +119,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_background"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Забронировать"
+                android:text="@string/reservation"
                 android:textColor="@color/white" />
 
             <Button
@@ -130,7 +130,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_register"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Детали" />
+                android:text="@string/details" />
         </LinearLayout>
     </LinearLayout>
 
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="8dp"
-            android:text="Не удалось загрузить данные. Попробуйте снова."
+            android:text="@string/error_loading"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:paddingHorizontal="20dp"
-            android:text="Повторить"
+            android:text="@string/retry"
             android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

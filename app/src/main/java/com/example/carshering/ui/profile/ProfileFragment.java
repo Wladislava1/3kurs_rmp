@@ -60,7 +60,8 @@ public class ProfileFragment extends Fragment {
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
                     result -> {
-                        if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        if (result.getResultCode() == Activity.RESULT_OK && result.getData()
+                                != null) {
                             selectedImageUri = result.getData().getData();
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(
@@ -71,7 +72,8 @@ public class ProfileFragment extends Fragment {
                                 uploadImageToServer();
                             } catch (IOException e) {
                                 e.printStackTrace();
-                                Toast.makeText(requireContext(), "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), getString(R.string.error_load_img),
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -88,8 +90,8 @@ public class ProfileFragment extends Fragment {
         apiService = ApiClient.getApiService();
 
         userEmail = requireContext()
-                .getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-                .getString("user_email", null);
+                .getSharedPreferences(getString(R.string.app_prefs), Context.MODE_PRIVATE)
+                .getString(getString(R.string.user_email), null);
 
         loadUserData();
 
@@ -100,70 +102,86 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadUserData() {
-        if (userEmail == null) {
-            Toast.makeText(requireContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         apiService.getUser(userEmail).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User user = response.body();
-                    String fullName = ((user.getFirstName() != null ? user.getFirstName() : "") + " " +
+                    String fullName = ((user.getFirstName() != null ?
+                            user.getFirstName() : "") + " " +
                             (user.getLastName() != null ? user.getLastName() : "")).trim();
 
-                    String registrationText = "Дата не указана";
+                    String registrationText = getString(R.string.no_date);
                     if (user.getRegistrationDate() != null) {
                         try {
-                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            Date date = inputFormat.parse(user.getRegistrationDate().substring(0, 10));
-                            SimpleDateFormat monthFormat = new SimpleDateFormat("M", Locale.getDefault());
-                            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+                            SimpleDateFormat inputFormat =
+                                    new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            Date date =
+                                    inputFormat.parse(user.getRegistrationDate().substring(0, 10));
+                            SimpleDateFormat monthFormat =
+                                    new SimpleDateFormat("M", Locale.getDefault());
+                            SimpleDateFormat yearFormat =
+                                    new SimpleDateFormat("yyyy", Locale.getDefault());
                             int monthIndex = Integer.parseInt(monthFormat.format(date)) - 1;
                             String monthName = RUSSIAN_MONTHS_DATIVE[monthIndex];
                             String year = yearFormat.format(date);
-                            String genderPrefix = "Male".equalsIgnoreCase(user.getGender()) ? "Присоединился" : "Присоединилась";
-                            registrationText = String.format("%s в %s %s года", genderPrefix, monthName, year);
+                            String genderPrefix =
+                                    getString(R.string.Male).equalsIgnoreCase(user.getGender()) ?
+                                            getString(R.string.connect_Male)
+                                            : getString(R.string.Female);
+                            registrationText =
+                                    String.format("%s в %s %s года", genderPrefix, monthName, year);
                         } catch (ParseException e) {
-                            Log.e("ProfileFragment", "Ошибка парсинга даты: " + e.getMessage());
+                            Log.e(getString(R.string.ProfileFragment),
+                                    getString(R.string.error_parse_date) + e.getMessage());
                         }
                     }
                     binding.tvLogRegister.setText(registrationText);
-                    binding.tvUserName.setText(!fullName.isEmpty() ? fullName : "Имя пользователя");
-                    binding.tvUserEmail.setText(user.getEmail() != null ? user.getEmail() : "Email");
+                    binding.tvUserName.setText(!fullName.isEmpty() ?
+                            fullName : getString(R.string.ru_username));
+                    binding.tvUserEmail.setText(user.getEmail() != null ?
+                            user.getEmail() : getString(R.string.email_up));
 
-                    String genderText = "Male".equalsIgnoreCase(user.getGender()) ? "Мужской" : "Женский";
+                    String genderText = getString(R.string.Male).equalsIgnoreCase(user.getGender())
+                            ? getString(R.string.ru_Male) : getString(R.string.ru_Female);
                     binding.tvUserGender.setText(genderText);
 
                     binding.ivProfilePhoto.setImageDrawable(null);
                     if (user.getProfilePhotoUrl() != null && !user.getProfilePhotoUrl().isEmpty()) {
-                        String imageUrl = "http://10.0.2.2:8080" + user.getProfilePhotoUrl();
-                        Log.d("ProfileFragment", "Попытка загрузки изображения: " + imageUrl);
+                        String imageUrl = getString(R.string.url) + user.getProfilePhotoUrl();
+                        Log.d(getString(R.string.ProfileFragment),
+                                getString(R.string.error_load_img) + imageUrl);
                         Picasso.get()
                                 .load(imageUrl)
                                 .transform(new CircleTransform())
                                 .into(binding.ivProfilePhoto, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
-                                        Log.d("ProfileFragment", "Изображение успешно загружено");
+                                        Log.d(getString(R.string.ProfileFragment),
+                                                getString(R.string.sucsec_img_load));
                                     }
 
                                     @Override
                                     public void onError(Exception e) {
-                                        Log.e("ProfileFragment", "Ошибка загрузки изображения: " + e.getMessage());
-                                        Toast.makeText(requireContext(), "Ошибка загрузки изображения: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        Log.e(getString(R.string.ProfileFragment),
+                                                getString(R.string.error_load_img)
+                                                        + e.getMessage());
+                                        Toast.makeText(requireContext(),
+                                                getString(R.string.error_load_img) +
+                                                        e.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных пользователя: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.error_load_data)
+                            + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                Toast.makeText(requireContext(), "Ошибка сети: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.error_internet)
+                        + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -174,13 +192,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadImageToServer() {
-        if (selectedImageUri == null || userEmail == null) {
-            Toast.makeText(requireContext(), "Ошибка: изображение или пользователь не выбраны", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try {
-            InputStream inputStream = requireActivity().getContentResolver().openInputStream(selectedImageUri);
+            InputStream inputStream =
+                    requireActivity().getContentResolver().openInputStream(selectedImageUri);
             byte[] fileBytes = new byte[inputStream.available()];
             inputStream.read(fileBytes);
             inputStream.close();
@@ -193,35 +207,42 @@ public class ProfileFragment extends Fragment {
             );
             binding.ivProfilePhoto.setImageBitmap(bitmap);
 
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), fileBytes);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("file", "profile_photo.jpg", requestFile);
+            RequestBody requestFile =
+                    RequestBody.create(MediaType.parse("image/*"), fileBytes);
+            MultipartBody.Part body = MultipartBody.Part.createFormData(getString(R.string.file),
+                    getString(R.string.profile_photo), requestFile);
 
             apiService.uploadProfilePhoto(userEmail, body).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call,
+                                       @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(requireContext(), "Фото профиля успешно загружено", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), getString(R.string.profile_photo_load),
+                                Toast.LENGTH_SHORT).show();
                         loadUserData();
                     } else {
-                        Toast.makeText(requireContext(), "Ошибка загрузки фото: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), getString(R.string.error_load_photo)
+                                + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    Toast.makeText(requireContext(), "Ошибка сети: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.error_internet) +
+                            t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(requireContext(), "Ошибка обработки изображения", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), getString(R.string.error_upload),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     private void logoutUser() {
-        requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        requireContext().getSharedPreferences(getString(R.string.app_prefs), Context.MODE_PRIVATE)
                 .edit()
-                .remove("user_email")
+                .remove(getString(R.string.user_email))
                 .apply();
         Intent intent = new Intent(requireContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

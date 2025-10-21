@@ -60,8 +60,11 @@ public class SearchResultsFragment extends Fragment {
 
         recyclerCars.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        String query = getArguments() != null ? getArguments().getString("query", "Kia") : "Kia";
-        ArrayList<Car> cars = getArguments() != null ? (ArrayList<Car>) getArguments().getSerializable("cars") : null;
+        String query = getArguments() != null ?
+                getArguments().getString(getString(R.string.query), getString(R.string.kia))
+                :  getString(R.string.kia);
+        ArrayList<Car> cars = getArguments() != null ?
+                (ArrayList<Car>) getArguments().getSerializable(getString(R.string.cars)) : null;
 
         if (cars != null) {
             progressBar.setVisibility(View.GONE);
@@ -115,7 +118,8 @@ public class SearchResultsFragment extends Fragment {
         ApiService apiService = ApiClient.getApiService();
         apiService.searchCars(query).enqueue(new Callback<List<Car>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Car>> call, @NonNull Response<List<Car>> response) {
+            public void onResponse(@NonNull Call<List<Car>> call,
+                                   @NonNull Response<List<Car>> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     carList.clear();
@@ -126,7 +130,8 @@ public class SearchResultsFragment extends Fragment {
                     } else {
                         recyclerCars.setVisibility(View.VISIBLE);
                         if (recyclerCars.getAdapter() == null) {
-                            recyclerCars.setAdapter(new CarAdapter(new CarAdapter.OnCarActionListener() {
+                            recyclerCars.setAdapter(new CarAdapter(
+                                    new CarAdapter.OnCarActionListener() {
                                 @Override
                                 public void onBookClick(Car car) {
                                     // TODO: переход на экран аренды

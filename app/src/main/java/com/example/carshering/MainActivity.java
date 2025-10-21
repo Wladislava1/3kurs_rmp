@@ -21,21 +21,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        boolean openHome = getIntent().getBooleanExtra(getString(R.string.openHomeFragment), false);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         if (!NetworkUtils.isNetworkAvailable(this)) {
             startActivity(new Intent(this, NoConnectionActivity.class));
             finish();
             return;
         }
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        if (openHome) {
+            goToHome();
+        } else {
+            loadFragment(new HomeFragment());
+        }
 
-        loadFragment(new HomeFragment());
         updateButtonIcons(R.id.nav_home_container);
 
-        binding.navHomeContainer.setOnClickListener(v -> {
-            goToHome();
-        });
+        binding.navHomeContainer.setOnClickListener(v -> goToHome());
 
         binding.navReservationContainer.setOnClickListener(v -> {
             updateButtonIcons(R.id.nav_reservation_container);

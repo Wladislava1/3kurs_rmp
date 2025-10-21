@@ -7,9 +7,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carshering.MainActivity;
 import com.example.carshering.R;
 import com.example.carshering.databinding.ActivityNoConnectionBinding;
 import com.example.carshering.ui.login.LoginActivity;
+import com.example.carshering.utils.SessionManager;
 
 public class NoConnectionActivity extends AppCompatActivity {
 
@@ -23,8 +25,15 @@ public class NoConnectionActivity extends AppCompatActivity {
 
         binding.retryButton.setOnClickListener(v -> {
             if (isNetworkAvailable()) {
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                if (SessionManager.isLoggedIn(this)) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra(getString(R.string.openHomeFragment), true);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                }
             } else {
                 binding.errorText.setText(R.string.no_retry_one);
             }

@@ -10,26 +10,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <!-- 🔙 Кнопка "Назад" -->
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_arrow_back"
-            android:contentDescription="Назад" />
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_arrow_back" />
 
-        <!-- Заголовок -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Результаты поиска"
+            android:text="@string/results"
             android:textColor="@color/purple"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -40,35 +38,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/errorLayout"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvErrorMessage"
-            android:text="@string/error_loading"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="@string/error_loading"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="8dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/retry" />
+            android:background="@drawable/button_background"
+            android:paddingHorizontal="20dp"
+            android:text="@string/retry"
+            android:textColor="@color/white" />
     </LinearLayout>
 
-    <!-- Список результатов -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCars"
         android:layout_width="match_parent"

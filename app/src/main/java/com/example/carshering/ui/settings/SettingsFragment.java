@@ -41,8 +41,9 @@ public class SettingsFragment extends Fragment {
         Picasso.get().setLoggingEnabled(true);
 
         userEmail = requireContext()
-                .getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-                .getString("user_email", null);
+                .getSharedPreferences(getString(R.string.app_prefs),
+                        Context.MODE_PRIVATE)
+                .getString(getString(R.string.user_email), null);
 
         loadUserData();
 
@@ -58,51 +59,52 @@ public class SettingsFragment extends Fragment {
     }
 
     private void loadUserData() {
-        if (userEmail == null) {
-            Toast.makeText(requireContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         apiService.getUser(userEmail).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User user = response.body();
-                    String fullName = ((user.getFirstName() != null ? user.getFirstName() : "") + " " +
+                    String fullName = ((user.getFirstName() != null ?
+                            user.getFirstName() : "") + " " +
                             (user.getLastName() != null ? user.getLastName() : "")).trim();
 
-                    binding.tvUserName.setText(!fullName.isEmpty() ? fullName : "Имя пользователя");
-                    binding.tvUserEmail.setText(user.getEmail() != null ? user.getEmail() : "Email");
+                    binding.tvUserName.setText(!fullName.isEmpty() ? fullName :
+                            getString(R.string.ru_username));
+                    binding.tvUserEmail.setText(user.getEmail() != null ? user.getEmail() :
+                            getString(R.string.email));
                     binding.ivAvatar.setImageDrawable(null);
 
                     if (user.getProfilePhotoUrl() != null && !user.getProfilePhotoUrl().isEmpty()) {
-                        String imageUrl = "http://10.0.2.2:8080" + user.getProfilePhotoUrl();
-                        Log.d("SettingsFragment", "Попытка загрузки изображения: " + imageUrl);
+                        String imageUrl = getString(R.string.url) + user.getProfilePhotoUrl();
                         Picasso.get()
                                 .load(imageUrl)
                                 .transform(new CircleTransform())
                                 .into(binding.ivAvatar, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
-                                        Log.d("SettingsFragment", "Изображение успешно загружено");
+                                        Log.d(getString(R.string.settingsFragment),
+                                                getString(R.string.sucsec_img_load));
                                     }
-
                                     @Override
                                     public void onError(Exception e) {
-                                        Log.e("SettingsFragment", "Ошибка загрузки изображения: " + e.getMessage());
+                                        Log.e(getString(R.string.settingsFragment),
+                                                getString(R.string.error_load_img)
+                                                        + e.getMessage());
                                     }
                                 });
                     } else {
                         binding.ivAvatar.setImageResource(R.drawable.ic_profile_placeholder);
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных пользователя: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.error_load_data)
+                            + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                Toast.makeText(requireContext(), "Ошибка сети: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.error_internet)
+                        + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

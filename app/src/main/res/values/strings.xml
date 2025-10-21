@@ -16,12 +16,15 @@
     <string name="btn_pleace_input">Пожалуйста, введите свои данные</string>
     <string name="btn_email">Электронная почта</string>
     <string name="email">email</string>
+    <string name="email_up">Email</string>
     <string name="btn_email_input">Введите электронную почту</string>
     <string name="btn_password">Пароль</string>
     <string name="password">password</string>
     <string name="btn_password_input">Введите пароль</string>
     <string name="btn_password_forgott">Забыли пароль?</string>
     <string name="btn_go_to_register">Зарегистрироваться</string>
+    <string name="url">http://10.0.2.2:8080</string>
+
 
     <string name="main_activity">Главный экран</string>
 
@@ -59,6 +62,19 @@
     <string name="data">data</string>
     <string name="upload_photo_passport_licence">Пожалуйста, загрузите фото паспорта и водительского удостоверения</string>
     <string name="user_alreade_exist">Пользователь уже существует</string>
+    <string name="connect_Male">Присоединился</string>
+    <string name="connect_Female">Присоединилась</string>
+    <string name="ProfileFragment">ProfileFragment</string>
+    <string name="file">file</string>
+    <string name="profile_photo">profile_photo.jpg</string>
+    <string name="profile_photo_load">Фото профиля успешно загружено</string>
+    <string name="error_load_photo">Ошибка загрузки фото:</string>
+
+
+
+
+
+
 
     <string name="galerry">Выбрать из галереи</string>
     <string name="make_photo">Сделать фото</string>
@@ -71,6 +87,8 @@
     <string name="skip">Пропустить</string>
     <string name="onboarding_pages">Onboarding pages</string>
     <string name="next">Далее</string>
+    <string name="details">Детали</string>
+    <string name="redervation">Забронировать</string>
     <string name="back">Назад</string>
     <string name="create_acc">Создать аккаунт</string>
     <string name="new_password">Придумайте пароль</string>
@@ -80,6 +98,7 @@
     </string>
 
     <string name="ru_firstname">Имя</string>
+    <string name="ru_username">Имя пользователя</string>
     <string name="input_firstname">Введите мя</string>
     <string name="ru_lastname">Фамилия</string>
     <string name="input_lastname">Введите фамилию</string>
@@ -101,6 +120,8 @@
     <string name="upload_photo_licence">Загрузите фото водительского удостоверения</string>
     <string name="upload_photo">Загрузить фото</string>
     <string name="upload_photo_passport">Загрузите фото паспорта</string>
+    <string name="error_parse_date">Ошибка парсинга даты: </string>
+
 
     <string name="use_funny">Пользуйтесь с удовольствием</string>
     <string name="sucesfull">Успешно</string>
@@ -116,8 +137,50 @@
     <string name="retry">Повторить</string>
 
     <string name="home">Главная</string>
+    <string name="results">Результаты поиска</string>
+    <string name="date_settings">Присоединился в июле 2024</string>
+    <string name="change_pass">Поменять пароль</string>
+    <string name="google">Google</string>
+    <string name="logout_acc">Выйти из профиля</string>
+    <string name="search">Поиск</string>
+    <string name="search_auto">Поиск автомобиля</string>
+    <string name="lets_found">Давайте найдем автомобиль</string>
+    <string name="app_prefs">app_prefs</string>
+    <string name="openHomeFragment">openHomeFragment</string>
+    <string name="user_email">user_email</string>
+    <string name="error_upload">Ошибка обработки изображения</string>
+    <string name="query">query</string>
+    <string name="kia">Kia</string>
+    <string name="cars">cars</string>
+    <string name="fromHome">fromHome</string>
+    <string name="inputMark">Введите марку автомобиля</string>
+
+    <string name="error_search">Не удалось выполнить поиск. Попробуйте снова</string>
+
+    <string name="theme">Тема</string>
+    <string name="help">Помощь</string>
+    <string name="come_friend">Пригласи друга</string>
+    <string name="notifications">Уведомления</string>
     <string name="settings">Настройки</string>
     <string name="reservation">Бронирования</string>
+    <string name="my_reservation">Бронирования</string>
+    <string name="my_auto_connect">Подключить свой автомобиль</string>
+    <string name="sucsec_img_load">Изображение успешно загружено</string>
+    <string name="error_load_img">Ошибка загрузки изображения: </string>
+    <string name="settingsFragment">SettingsFragment</string>
+    <string name="error_load_data">Ошибка загрузки данных пользователя: </string>
+    <string name="no_date">Дата не указана</string>
+
+
+
+
+
+    <string name="fuel">Бензин</string>
+    <string name="at">Автомат</string>
+    <string name="marka">Марка</string>
+    <string name="brend">Бренд</string>
+    <string name="price">₽ 500 / час</string>
+
 
 
 </resources>

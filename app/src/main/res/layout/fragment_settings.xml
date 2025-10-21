@@ -13,7 +13,7 @@
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
         android:paddingBottom="24dp"
-        android:text="Настройки"
+        android:text="@string/settings"
         android:textColor="@color/purple"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Имя пользователя"
+                android:text="@string/ru_username"
                 android:textColor="@color/purple"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -69,7 +69,6 @@
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 
-    <!-- Настройки -->
     <LinearLayout
         android:id="@+id/llSettings"
         android:layout_width="match_parent"
@@ -97,7 +96,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Мои бронирования"
+                android:text="@string/my_reservation"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -127,7 +126,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Тема"
+                android:text="@string/theme"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -156,7 +155,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Уведомления"
+                android:text="@string/notifications"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -185,7 +184,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Подключить свой автомобиль"
+                android:text="@string/my_auto_connect"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -220,7 +219,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Помощь"
+                android:text="@string/help"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -249,7 +248,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Пригласи друга"
+                android:text="@string/come_friend"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 

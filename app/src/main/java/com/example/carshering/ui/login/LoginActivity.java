@@ -55,12 +55,11 @@ public class LoginActivity extends AppCompatActivity {
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                // ID-токен FireBase в .json
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso); // экран Google-аккаунт
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -94,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                 ) {
                     if (response.isSuccessful()) {
 
-                        getSharedPreferences("app_prefs", MODE_PRIVATE)
+                        getSharedPreferences(getString(R.string.app_prefs), MODE_PRIVATE)
                                 .edit()
-                                .putString("user_email", email)
+                                .putString(getString(R.string.user_email), email)
                                 .apply();
 
                         Toast.makeText(LoginActivity.this,
@@ -150,11 +149,12 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithCredential(credential).addOnCompleteListener(this,
                 task -> {
                     if (task.isSuccessful()) {
-                        String email = auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : null;
+                        String email = auth.getCurrentUser() != null ?
+                                auth.getCurrentUser().getEmail() : null;
                         if (email != null) {
-                            getSharedPreferences("app_prefs", MODE_PRIVATE)
+                            getSharedPreferences(getString(R.string.app_prefs), MODE_PRIVATE)
                                     .edit()
-                                    .putString("user_email", email)
+                                    .putString(getString(R.string.user_email), email)
                                     .apply();
                         }
                         Toast.makeText(this,

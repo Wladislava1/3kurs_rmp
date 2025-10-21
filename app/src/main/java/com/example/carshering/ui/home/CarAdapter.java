@@ -63,7 +63,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.tvFuel.setText(car.getFuelType());
 
         if (car.getImageUrl() != null && !car.getImageUrl().isEmpty()) {
-            String imageUrl = car.getImageUrl().startsWith("http") ? car.getImageUrl() : BASE_URL + car.getImageUrl();
+            String imageUrl = car.getImageUrl().startsWith("http") ?
+                    car.getImageUrl() : BASE_URL + car.getImageUrl();
             Glide.with(holder.itemView.getContext())
                     .load(imageUrl)
                     .placeholder(R.drawable.car_placeholder)

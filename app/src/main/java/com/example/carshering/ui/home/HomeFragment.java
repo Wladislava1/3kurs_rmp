@@ -84,7 +84,8 @@ public class HomeFragment extends Fragment {
         searchButton.setOnClickListener(v -> {
             String query = searchField.getText().toString().trim();
             if (TextUtils.isEmpty(query)) {
-                Toast.makeText(requireContext(), "Введите марку автомобиля", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.inputMark),
+                        Toast.LENGTH_SHORT).show();
             } else {
                 if (!NetworkUtils.isNetworkAvailable(requireContext())) {
                     startActivity(new Intent(requireContext(), NoConnectionActivity.class));
@@ -112,7 +113,8 @@ public class HomeFragment extends Fragment {
 
         apiService.getCars().enqueue(new Callback<List<Car>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Car>> call, @NonNull Response<List<Car>> response) {
+            public void onResponse(@NonNull Call<List<Car>> call,
+                                   @NonNull Response<List<Car>> response) {
                 binding.progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     carAdapter.setCars(response.body());

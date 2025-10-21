@@ -16,9 +16,9 @@
             android:id="@+id/ivProfilePhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/photo"
             android:contentDescription="@string/photo_profil"
-            android:scaleType="centerCrop"
-            android:background="@drawable/photo" />
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/ivAddPhotoIcon"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Имя пользователя"
+        android:text="@string/ru_username"
         android:textColor="@color/purple"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Присоединился в июле 2024"
+        android:text="@string/date_settings"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
@@ -117,7 +117,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Поменять пароль"
+                android:text="@string/change_pass"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -173,7 +173,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Google"
+                android:text="@string/google"
                 android:textColor="@color/purple"
                 android:textSize="16sp" />
 
@@ -185,7 +185,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Google"
+                android:text="@string/google"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -202,7 +202,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Выйти из профиля"
+            android:text="@string/logout_acc"
             android:textColor="@color/purple"
             android:textSize="18sp" />
 

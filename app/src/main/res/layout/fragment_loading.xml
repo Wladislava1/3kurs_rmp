@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="8dp"
-            android:text="Не удалось выполнить поиск. Попробуйте снова"
+            android:text="@string/error_search"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:paddingHorizontal="20dp"
-            android:text="Повторить"
+            android:text="@string/retry"
             android:textColor="@color/white" />
     </LinearLayout>
 
